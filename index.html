@@ -9,6 +9,13 @@
   <meta property="og:title" content="Dr. Deogire Super Speciality Dental Clinic" />
   <meta property="og:description" content="Nerul's highest-rated dental practice. 4.9★ · 212 reviews. Specialist-led, warm, advanced." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://deogire-dental.pages.dev/" />
+  <meta property="og:image" content="https://deogire-dental.pages.dev/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dr. Deogire Super Speciality Dental Clinic" />
+  <meta name="twitter:description" content="Nerul's highest-rated dental practice. 4.9★ · 212 reviews. Specialist-led, warm, advanced." />
+  <link rel="canonical" href="https://deogire-dental.pages.dev/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦷</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -31,7 +38,7 @@
       --shadow-sm:  0 2px 12px rgba(42,36,32,.06);
       --shadow-md:  0 6px 32px rgba(42,36,32,.10);
       --shadow-lg:  0 16px 60px rgba(42,36,32,.14);
-      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+      --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
     }
 
     /* ─── RESET ───────────────────────────────────────────────────── */
@@ -39,7 +46,7 @@
     html {
       scroll-behavior: smooth;
       font-size: 16px;
-      overflow-x: clip; /* stops bg-accent blobs creating horizontal scroll */
+      overflow-x: hidden;
     }
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -47,6 +54,7 @@
       color: var(--charcoal);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -131,7 +139,7 @@
     }
 
     /* ─── NAV ─────────────────────────────────────────────────────── */
-    nav {
+    #navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
@@ -141,7 +149,7 @@
       border-bottom: 1px solid rgba(224,217,206,.5);
       transition: box-shadow var(--transition);
     }
-    nav.scrolled {
+    #navbar.scrolled {
       box-shadow: var(--shadow-sm);
     }
     .nav-inner {
@@ -156,6 +164,7 @@
     .nav-brand {
       display: flex;
       flex-direction: column;
+      white-space: nowrap;
     }
     .nav-brand-name {
       font-family: 'Cormorant Garamond', serif;
@@ -184,6 +193,7 @@
       letter-spacing: .01em;
     }
     .nav-links a:hover { color: var(--charcoal); }
+    .nav-links a.active { color: var(--charcoal); font-weight: 600; }
     .nav-cta {
       display: flex;
       align-items: center;
@@ -214,6 +224,9 @@
       border-radius: 2px;
       transition: transform var(--transition), opacity var(--transition);
     }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
       display: none;
       position: fixed;
@@ -224,6 +237,8 @@
       z-index: 99;
       flex-direction: column;
       gap: 16px;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
@@ -233,6 +248,12 @@
       padding: 8px 0;
       border-bottom: 1px solid var(--stone);
     }
+    .mobile-menu .btn-whatsapp {
+      justify-content: center;
+      border-bottom: none;
+      padding: 14px 28px;
+      color: #fff;
+    }
 
     /* ─── HERO ────────────────────────────────────────────────────── */
     #hero {
@@ -240,7 +261,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      /* overflow:hidden removed — was clipping pills & hero card on desktop */
+      overflow: hidden; /* clips the bg-accent blobs that bleed outside */
       background: var(--warm-white);
       padding-top: 64px;
     }
@@ -440,7 +461,7 @@
       font-size: 13px;
       font-weight: 500;
       color: var(--charcoal);
-      animation: float 4s ease-in-out infinite;
+      animation: float 3s ease-in-out infinite;
     }
     .pill-1 {
       top: -18px; left: -20px;
@@ -451,7 +472,7 @@
       animation-delay: 2s;
     }
     /* contain pills within stack bounds on mobile */
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
       .pill-1 { top: 12px; left: 0; }
       .pill-2 { bottom: 12px; right: 0; }
       .hero-card-stack { padding: 0 4px; }
@@ -1086,23 +1107,30 @@
     /* ─── SCROLL ANIMATIONS ───────────────────────────────────────── */
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      transform: translateY(18px);
+      transition: opacity 0.42s ease, transform 0.42s ease;
     }
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-1 { transition-delay: 0.07s; }
+    .reveal-delay-2 { transition-delay: 0.13s; }
+    .reveal-delay-3 { transition-delay: 0.19s; }
+    .reveal-delay-4 { transition-delay: 0.25s; }
 
     /* ─── RESPONSIVE ──────────────────────────────────────────────── */
-    @media (max-width: 900px) {
+    @media (min-width: 1025px) and (max-width: 1200px) {
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 13px; }
+      .nav-cta { gap: 8px; }
+      .nav-phone { font-size: 12.5px; }
+      .nav-cta .btn-whatsapp { padding: 10px 20px; font-size: 14px; }
+    }
+
+    @media (max-width: 1024px) {
       .nav-links { display: none; }
-      .nav-cta .btn-whatsapp { display: none; }
-      .nav-phone { display: none; }
+      .nav-cta { display: none; }
       .hamburger { display: flex; }
       .hero-inner {
         grid-template-columns: 1fr;
@@ -1134,9 +1162,15 @@
       .services-grid { grid-template-columns: 1fr; }
     }
 
+    /* ─── REDUCED MOTION ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none; opacity: 1; transform: none; }
+      .hero-float-pill { animation: none; }
+    }
+
     /* ─── PRINT STYLES ────────────────────────────────────────────── */
     @media print {
-      nav, .hero-visual { display: none; }
+      #navbar, .hero-visual { display: none; }
       #hero { min-height: auto; padding-top: 20px; }
       .hero-inner { grid-template-columns: 1fr; }
       body { font-size: 12px; }
@@ -1146,6 +1180,38 @@
     /* ─── STAR SVG ────────────────────────────────────────────────── */
     .star-svg { display: inline-block; width: 16px; height: 16px; fill: currentColor; }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dentist",
+    "name": "Dr. Deogire Super Speciality Dental Clinic",
+    "url": "https://deogire-dental.pages.dev/",
+    "telephone": "+919222122343",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Shop A3, Shreeji Darshan, Plot 49, Station Road",
+      "addressLocality": "Nerul",
+      "addressRegion": "Navi Mumbai",
+      "postalCode": "400706",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "10:00",
+        "closes": "22:00"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "212",
+      "bestRating": "5"
+    },
+    "priceRange": "₹₹"
+  }
+  </script>
 </head>
 <body>
 
@@ -1161,13 +1227,14 @@
       <a href="#services">Services</a>
       <a href="#reviews">Reviews</a>
       <a href="#location">Location</a>
+      <a href="#book">Book</a>
     </div>
     <div class="nav-cta">
       <a href="tel:+919222122343" class="nav-phone" aria-label="Call clinic">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
         092221 22343
       </a>
-      <a href="https://wa.me/919222122343" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Book via WhatsApp">
+      <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Book via WhatsApp">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
         Book Appointment
       </a>
@@ -1184,7 +1251,7 @@
   <a href="#services">Our Services</a>
   <a href="#reviews">Patient Reviews</a>
   <a href="#location">Location & Hours</a>
-  <a href="https://wa.me/919222122343" target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:8px">
+  <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:8px">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
     WhatsApp Appointment
   </a>
@@ -1212,7 +1279,7 @@
       </p>
 
       <div class="hero-actions">
-        <a href="https://wa.me/919222122343" id="hero-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Book appointment via WhatsApp">
+        <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" id="hero-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Book appointment via WhatsApp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Book via WhatsApp
         </a>
@@ -1249,9 +1316,9 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#B85C38"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/><path d="M8 14h8"/></svg>
           </div>
           <p class="hero-card-quote">
-            "I was avoiding dental work for 12 years out of fear. He did amazing work — painless, skilled, and genuinely caring."
+            "Being a dentist myself — this clinic is a perfect example of advanced technology and skilled doctors with soft-spoken staff."
           </p>
-          <p class="hero-card-author">— Verified Google Patient · Wisdom Tooth RCT</p>
+          <p class="hero-card-author">— Dr. Amruta · Dentist, Verified Google Patient</p>
         </div>
         <div class="pill-2 hero-float-pill">
           <span class="pill-dot"></span>
@@ -1505,7 +1572,7 @@
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
         </div>
-        <p class="review-text">"The child dentist was patient, gentle, and friendly. My child felt safe and happy." A clinic where children leave smiling — that says everything.</p>
+        <p class="review-text">"The child dentist was patient, gentle, and friendly. My child felt safe and happy."</p>
         <div class="review-author">
           <div class="review-avatar" aria-hidden="true">S</div>
           <div>
@@ -1633,7 +1700,7 @@
           </div>
         </div>
 
-        <a href="https://wa.me/919222122343" id="location-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp reveal" aria-label="Book appointment via WhatsApp">
+        <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" id="location-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp reveal" aria-label="Book appointment via WhatsApp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Book via WhatsApp
         </a>
@@ -1683,7 +1750,7 @@
         </p>
       </div>
       <div class="book-actions">
-        <a href="https://wa.me/919222122343" id="footer-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp-lg" aria-label="Book appointment on WhatsApp">
+        <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" id="footer-whatsapp-cta" target="_blank" rel="noopener" class="btn-whatsapp-lg" aria-label="Book appointment on WhatsApp">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           WhatsApp us now
         </a>
@@ -1708,10 +1775,11 @@
       <a href="#services">Services</a>
       <a href="#reviews">Reviews</a>
       <a href="#location">Location</a>
-      <a href="https://wa.me/919222122343" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" target="_blank" rel="noopener">WhatsApp</a>
       <a href="tel:+919222122343">Call Us</a>
     </nav>
     <p class="footer-bottom">
+      © 2025 Dr. Deogire Super Speciality Dental Clinic ·
       Shop A3, Shreeji Darshan, Plot 49, Station Road, Nerul, Navi Mumbai 400706
       · 4.9★ on Google · 212 Reviews
     </p>
@@ -1759,6 +1827,17 @@
       if (rect.top < window.innerHeight) el.classList.add('visible');
     });
   }, 300);
+
+  // Active nav link on scroll
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const navSections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const setActiveNav = () => {
+    let current = '';
+    navSections.forEach(s => { if (window.scrollY >= s.offsetTop - 110) current = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', setActiveNav, { passive: true });
+  setActiveNav();
 </script>
 
 </body>
