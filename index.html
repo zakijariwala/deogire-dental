@@ -263,10 +263,12 @@
       position: relative;
       overflow: hidden; /* clips the bg-accent blobs that bleed outside */
       background: var(--warm-white);
+      background-image: radial-gradient(rgba(184, 92, 56, 0.05) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
       padding-top: 64px;
     }
     /* scroll-margin-top so fixed nav never covers section headings */
-    #why, #services, #reviews, #location, #book {
+    #why, #safety, #services, #reviews, #location, #book {
       scroll-margin-top: 72px;
     }
     .hero-bg-accent {
@@ -515,15 +517,18 @@
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      background: var(--warm-white);
-      border: 1px solid var(--stone);
+      background: rgba(250, 246, 240, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229, 217, 198, 0.8);
       border-radius: var(--radius-md);
       padding: 16px;
-      transition: border-color var(--transition), box-shadow var(--transition);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
     }
     .feature-pill:hover {
       border-color: var(--sage-light);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
     .feature-icon {
       width: 36px;
@@ -631,8 +636,10 @@
       gap: 20px;
     }
     .service-card {
-      background: var(--linen);
-      border: 1px solid var(--stone);
+      background: rgba(242, 234, 216, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(229, 217, 198, 0.9);
       border-radius: var(--radius-lg);
       padding: 32px 28px;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
@@ -961,13 +968,418 @@
       transform: translateY(-1px);
     }
 
+    /* ─── STERILIZATION SAFETY ────────────────────────────────────── */
+    .safety-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(242, 234, 216, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(229, 217, 198, 0.8);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+    .safety-timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      margin-bottom: 48px;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 24px; left: 4%; right: 4%;
+      height: 4px;
+      background: var(--stone);
+      z-index: 1;
+      border-radius: 2px;
+    }
+    .timeline-progress {
+      height: 100%;
+      background: var(--sage);
+      width: 25%;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+    }
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      width: 25%;
+    }
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--warm-white);
+      border: 2px solid var(--stone);
+      color: var(--warm-grey);
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .timeline-step.active .step-num {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+    }
+    .step-label {
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--warm-grey);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      text-align: center;
+      transition: color var(--transition);
+    }
+    .timeline-step.active .step-label {
+      color: var(--charcoal);
+    }
+    .safety-cards {
+      position: relative;
+      min-height: 160px;
+    }
+    .safety-card {
+      display: none;
+      align-items: center;
+      gap: 32px;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .safety-card.active {
+      display: flex;
+    }
+    .safety-card-visual {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      background: var(--sage-pale);
+      border: 1px solid rgba(184, 92, 56, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--sage);
+    }
+    .safety-card-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+    .safety-card-content p {
+      font-size: 14.5px;
+      color: var(--warm-grey);
+      line-height: 1.7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .safety-container { padding: 24px; }
+      .safety-timeline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+      .timeline-line { display: none; }
+      .timeline-step {
+        flex-direction: row;
+        width: 100%;
+        gap: 16px;
+        align-items: center;
+      }
+      .step-num { width: 36px; height: 36px; font-size: 13px; }
+      .step-label { margin-top: 0; text-align: left; font-size: 11px; }
+      .safety-card { flex-direction: column; align-items: flex-start; gap: 20px; min-height: auto; }
+      .safety-card-visual { width: 60px; height: 60px; }
+      .safety-card-visual svg { width: 36px; height: 36px; }
+    }
+
+    /* ─── QUIZ MODAL ──────────────────────────────────────────────── */
+    .quiz-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(42, 36, 32, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .quiz-modal-overlay.open {
+      display: flex;
+    }
+    .quiz-modal-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--warm-white);
+      border: 1px solid var(--stone);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px 32px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .quiz-close-btn {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--warm-grey);
+      cursor: pointer;
+      line-height: 1;
+      transition: color var(--transition);
+    }
+    .quiz-close-btn:hover {
+      color: var(--charcoal);
+    }
+    .quiz-progress-bar {
+      height: 6px;
+      background: var(--stone);
+      border-radius: 3px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      background: var(--sage);
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 3px;
+    }
+    .quiz-step-card {
+      display: none;
+      animation: stepFadeIn 0.3s ease forwards;
+    }
+    .quiz-step-card.active {
+      display: block;
+    }
+    @keyframes stepFadeIn {
+      from { opacity: 0; transform: translateX(8px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .quiz-step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+      line-height: 1.25;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .quiz-option-btn {
+      background: var(--warm-white);
+      border: 1.5px solid var(--stone);
+      color: var(--charcoal);
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .quiz-option-btn:hover {
+      border-color: var(--sage-light);
+      background: var(--sage-pale);
+      transform: translateY(-1px);
+    }
+    .quiz-footer {
+      margin-top: 24px;
+      border-top: 1px solid var(--stone);
+      padding-top: 16px;
+      text-align: center;
+    }
+    .quiz-skip-link {
+      font-size: 12px;
+      color: var(--warm-grey);
+      text-decoration: underline;
+      transition: color var(--transition);
+    }
+    .quiz-skip-link:hover {
+      color: var(--charcoal);
+    }
+
+    /* ─── ESTIMATOR CARD ──────────────────────────────────────────── */
+    .estimator-card {
+      width: 380px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      color: var(--warm-white);
+      box-shadow: var(--shadow-lg);
+    }
+    .estimator-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--warm-white);
+      margin-bottom: 24px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 12px;
+    }
+    .estimator-row {
+      margin-bottom: 20px;
+    }
+    .estimator-row label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 8px;
+    }
+    .estimator-select {
+      width: 100%;
+      background: rgba(42, 36, 32, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--warm-white);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .estimator-select:focus {
+      border-color: var(--gold-light);
+    }
+    .estimator-select option {
+      background: #2A2420;
+      color: var(--warm-white);
+    }
+    .estimator-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .qty-display {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+    .estimator-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+      margin-top: 10px;
+    }
+    .estimator-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+      transition: transform var(--transition);
+      box-shadow: 0 0 10px rgba(184, 147, 74, 0.5);
+    }
+    .estimator-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    .estimator-summary {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .summary-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .summary-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .summary-value.highlight {
+      color: var(--gold-light);
+      font-size: 18px;
+    }
+    .estimator-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .estimator-actions .btn-whatsapp-lg {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+    .estimator-phone {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color var(--transition);
+    }
+    .estimator-phone:hover {
+      color: var(--warm-white);
+    }
+
+    @media (max-width: 900px) {
+      .estimator-card {
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
+      }
+    }
+
     /* ─── BOOKING CTA ─────────────────────────────────────────────── */
     #book {
       padding: 100px 0;
       background: var(--warm-white);
     }
     .book-inner {
-      background: linear-gradient(135deg, #2A2420 0%, #3D2A1E 100%);
+      background: 
+        radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(135deg, #2A2420 0%, #3D2A1E 100%);
+      background-size: 20px 20px, 100% 100%;
       border-radius: 32px;
       padding: 72px 60px;
       display: grid;
@@ -1421,6 +1833,92 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════ STERILIZATION SAFETY ════════════════ -->
+<section id="safety" aria-label="Sterilization Safety" style="padding: 100px 0; background: var(--warm-white); scroll-margin-top: 72px;">
+  <div class="container">
+    <div class="services-header reveal" style="margin-bottom: 50px;">
+      <p class="section-label">Uncompromising Hygiene</p>
+      <h2 class="section-title">Class-B Autoclave<br><em>100% Sterilization Protocol</em></h2>
+      <div class="divider" aria-hidden="true" style="margin: 20px auto 28px;"></div>
+      <p class="services-desc" style="max-width: 600px; margin: 0 auto;">
+        We treat clinical safety with zero compromise. Follow our advanced 4-step sterilization system that guarantees absolute protection for every single patient.
+      </p>
+    </div>
+
+    <div class="safety-container reveal">
+      <!-- Timeline Tracker -->
+      <div class="safety-timeline" role="tablist" aria-label="Sterilization Steps">
+        <div class="timeline-line">
+          <div class="timeline-progress" id="safetyProgress" style="width: 25%;"></div>
+        </div>
+        <button class="timeline-step active" role="tab" aria-selected="true" aria-controls="step1" data-step="1">
+          <span class="step-num">1</span>
+          <span class="step-label">Ultrasonic Cleaning</span>
+        </button>
+        <button class="timeline-step" role="tab" aria-selected="false" aria-controls="step2" data-step="2">
+          <span class="step-num">2</span>
+          <span class="step-label">Chemical Disinfection</span>
+        </button>
+        <button class="timeline-step" role="tab" aria-selected="false" aria-controls="step3" data-step="3">
+          <span class="step-num">3</span>
+          <span class="step-label">Hermetic Pouching</span>
+        </button>
+        <button class="timeline-step" role="tab" aria-selected="false" aria-controls="step4" data-step="4">
+          <span class="step-num">4</span>
+          <span class="step-label">Class-B Autoclave</span>
+        </button>
+      </div>
+
+      <!-- Step Cards Container -->
+      <div class="safety-cards">
+        <!-- Step 1 -->
+        <div class="safety-card active" id="step1" role="tabpanel">
+          <div class="safety-card-visual">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M16.24 16.24l1.41 1.41M2 12h2M20 12h2M6.34 17.66l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </div>
+          <div class="safety-card-content">
+            <h3>Step 1: Ultrasonic Debris Dislodgment</h3>
+            <p>Instruments undergo cavitation in an ultrasonic cleaner. High-frequency sound waves create micro-bubbles that dislodge microscopic physical particles, blood, and debris from the smallest crevices of oral tools—impossible to reach by manual scrubbing.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="safety-card" id="step2" role="tabpanel">
+          <div class="safety-card-visual">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8M14 2v8M4 10h16M19 10l-1.5 12h-11L5 10"/></svg>
+          </div>
+          <div class="safety-card-content">
+            <h3>Step 2: Medical-Grade Chemical Disinfection</h3>
+            <p>Instruments are submerged in advanced, concentrated clinical disinfectant solution. This kills 99.9% of bacteria, viruses, and fungi, chemically sanitizing the instruments prior to any packaging.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="safety-card" id="step3" role="tabpanel">
+          <div class="safety-card-visual">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M9 17h6M9 7h6M9 12h6"/></svg>
+          </div>
+          <div class="safety-card-content">
+            <h3>Step 3: Hermetic Sealed Pouching</h3>
+            <p>Cleaned and sanitized tools are individually dried and placed inside heavy-duty autoclave sterilization pouches. The pouch is hermetically heat-sealed with internal chemical indicators that change color, guaranteeing sterility is preserved until opened directly in front of you.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="safety-card" id="step4" role="tabpanel">
+          <div class="safety-card-visual">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="safety-card-content">
+            <h3>Step 4: Class-B Steam Sterilization</h3>
+            <p>The ultimate safety standard. Pouched instruments are sterilized in our advanced Class-B Autoclave. Using high-pressure vacuum pulses and 134°C saturated steam, it destroys even the most resistant bacterial spores, ensuring 100% sterile tools.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════ SERVICES ═════════════════════════ -->
 <section id="services" aria-label="Our services">
   <div class="container">
@@ -1733,6 +2231,49 @@
           </a>
         </div>
       </div>
+      
+      <!-- Price Estimator Card -->
+      <div class="estimator-card reveal">
+        <h3 class="estimator-title">Treatment Cost Estimator</h3>
+        
+        <div class="estimator-row">
+          <label for="treatmentSelect">Select Treatment</label>
+          <select id="treatmentSelect" class="estimator-select">
+            <option value="implant">Dental Implant (Titanium)</option>
+            <option value="aligners">Clear Aligners (Invisible Braces)</option>
+            <option value="rootcanal">Root Canal Treatment (Laser/RCT)</option>
+            <option value="whitening">Laser Teeth Whitening</option>
+            <option value="cleaning">Dental Scaling & Cleaning</option>
+          </select>
+        </div>
+
+        <div class="estimator-row" id="qtyRow">
+          <div class="estimator-label-row">
+            <label for="treatmentQty" id="qtyLabel">Number of Implants</label>
+            <span class="qty-display" id="qtyDisplay">1</span>
+          </div>
+          <input type="range" id="treatmentQty" class="estimator-slider" min="1" max="6" value="1">
+        </div>
+
+        <div class="estimator-summary">
+          <div class="summary-item">
+            <span class="summary-label">Estimated Cost</span>
+            <span class="summary-value" id="estCost">₹35,000</span>
+          </div>
+          <div class="summary-item" id="emiItem">
+            <span class="summary-label">Easy EMI Plan</span>
+            <span class="summary-value highlight" id="estEMI">₹2,499/mo</span>
+          </div>
+        </div>
+
+        <div class="estimator-actions">
+          <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" id="estimatorWhatsappCta" target="_blank" rel="noopener" class="btn-whatsapp-lg" aria-label="Book appointment on WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
+            Book Appointment
+          </a>
+          <a href="tel:+919222122343" class="estimator-phone" aria-label="Call clinic">Or call: 092221 22343</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1836,9 +2377,265 @@
     navSections.forEach(s => { if (window.scrollY >= s.offsetTop - 110) current = s.id; });
     navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
   };
-  window.addEventListener('scroll', setActiveNav, { passive: true });
-  setActiveNav();
+  // Safety Sterilization Timeline Tab System
+  const timelineSteps = document.querySelectorAll('.timeline-step');
+  const safetyProgress = document.getElementById('safetyProgress');
+  const safetyCards = document.querySelectorAll('.safety-card');
+
+  timelineSteps.forEach(step => {
+    step.addEventListener('click', () => {
+      // Deactivate all steps & cards
+      timelineSteps.forEach(s => {
+        s.classList.remove('active');
+        s.setAttribute('aria-selected', 'false');
+      });
+      safetyCards.forEach(c => c.classList.remove('active'));
+
+      // Activate selected step & card
+      step.classList.add('active');
+      step.setAttribute('aria-selected', 'true');
+      const stepNum = step.getAttribute('data-step');
+      document.getElementById('step' + stepNum).classList.add('active');
+
+      // Update progress bar width
+      const progressWidths = { '1': '25%', '2': '50%', '3': '75%', '4': '100%' };
+      safetyProgress.style.width = progressWidths[stepNum] || '25%';
+    });
+  });
+  // Price Estimator Logic
+  const treatmentSelect = document.getElementById('treatmentSelect');
+  const treatmentQty = document.getElementById('treatmentQty');
+  const qtyLabel = document.getElementById('qtyLabel');
+  const qtyDisplay = document.getElementById('qtyDisplay');
+  const estCost = document.getElementById('estCost');
+  const estEMI = document.getElementById('estEMI');
+  const emiItem = document.getElementById('emiItem');
+  const qtyRow = document.getElementById('qtyRow');
+  const estimatorWhatsappCta = document.getElementById('estimatorWhatsappCta');
+
+  const treatments = {
+    implant: {
+      label: 'Number of Implants',
+      min: 1, max: 6, def: 1,
+      unitPrice: 35000,
+      hasEmi: true, emiFactor: 0.071,
+      unitName: 'Implant(s)',
+      whatsAppText: 'Dental Implant consultation'
+    },
+    aligners: {
+      label: 'Complexity Level',
+      min: 1, max: 3, def: 1,
+      customLabels: { '1': 'Mild Aligners', '2': 'Moderate Aligners', '3': 'Complex Aligners' },
+      prices: { '1': 45000, '2': 65000, '3': 85000 },
+      hasEmi: true,
+      emis: { '1': '₹2,999/mo', '2': '₹4,499/mo', '3': '₹5,999/mo' },
+      unitName: 'Aligners',
+      whatsAppText: 'Clear Aligners consultation'
+    },
+    rootcanal: {
+      label: 'Number of Teeth',
+      min: 1, max: 4, def: 1,
+      unitPrice: 4500,
+      hasEmi: true, emiFactor: 0.088,
+      unitName: 'Root Canal(s)',
+      whatsAppText: 'Root Canal Treatment consultation'
+    },
+    whitening: {
+      label: 'Number of Sessions',
+      min: 1, max: 2, def: 1,
+      unitPrice: 8000,
+      hasEmi: false,
+      unitName: 'Session(s)',
+      whatsAppText: 'Laser Teeth Whitening session'
+    },
+    cleaning: {
+      label: 'Number of Patients',
+      min: 1, max: 5, def: 1,
+      unitPrice: 1500,
+      hasEmi: false,
+      unitName: 'Person(s)',
+      whatsAppText: 'Dental Scaling & Cleaning appointment'
+    }
+  };
+
+  const updateEstimator = () => {
+    const selected = treatmentSelect.value;
+    const config = treatments[selected];
+    const val = parseInt(treatmentQty.value);
+
+    // Update Slider Config
+    qtyLabel.textContent = config.label;
+    treatmentQty.min = config.min;
+    treatmentQty.max = config.max;
+
+    // Handle Custom Display
+    if (config.customLabels) {
+      qtyDisplay.textContent = config.customLabels[val];
+    } else {
+      qtyDisplay.textContent = `${val} ${config.unitName}`;
+    }
+
+    // Calculate Price
+    let price = 0;
+    if (config.prices) {
+      price = config.prices[val];
+    } else {
+      price = config.unitPrice * val;
+    }
+    estCost.textContent = `₹${price.toLocaleString('en-IN')}`;
+
+    // Handle EMI display
+    if (config.hasEmi) {
+      emiItem.style.display = 'flex';
+      if (config.emis) {
+        estEMI.textContent = config.emis[val];
+      } else {
+        const emi = Math.round(price * config.emiFactor);
+        estEMI.textContent = `₹${emi.toLocaleString('en-IN')}/mo`;
+      }
+    } else {
+      emiItem.style.display = 'none';
+    }
+
+    // Format WhatsApp Link
+    const selectionName = config.customLabels ? config.customLabels[val] : `${val} ${config.unitName}`;
+    const message = `Hi Dr. Deogire, I just estimated my treatment cost on your site: %0A- Treatment: ${config.whatsAppText}%0A- Scope: ${selectionName}%0A- Estimated Price: ₹${price.toLocaleString('en-IN')}%0AI'd like to book an appointment to discuss this.`;
+    estimatorWhatsappCta.href = `https://wa.me/919222122343?text=${message}`;
+  };
+
+  treatmentSelect.addEventListener('change', () => {
+    const selected = treatmentSelect.value;
+    treatmentQty.value = treatments[selected].def;
+    updateEstimator();
+  });
+
+  treatmentQty.addEventListener('input', updateEstimator);
+  updateEstimator();
+  // Smile Assessment Quiz Logic
+  const quizModal = document.getElementById('quizModal');
+  const closeQuiz = document.getElementById('closeQuiz');
+  const quizProgress = document.getElementById('quizProgress');
+  const quizSkipBtn = document.getElementById('quizSkipBtn');
+  const quizSteps = [
+    document.getElementById('quizStep1'),
+    document.getElementById('quizStep2'),
+    document.getElementById('quizStep3')
+  ];
+
+  let currentQuizStep = 0;
+  let quizSelections = {};
+
+  const openQuizModal = () => {
+    currentQuizStep = 0;
+    quizSelections = {};
+    quizProgress.style.width = '33.3%';
+    quizSteps.forEach((step, idx) => {
+      step.classList.toggle('active', idx === 0);
+    });
+    quizModal.classList.add('open');
+  };
+
+  const closeQuizModal = () => {
+    quizModal.classList.remove('open');
+  };
+
+  // Bind trigger buttons (intercept WhatsApp CTAs to launch Quiz)
+  const ctaButtons = [
+    document.getElementById('hero-whatsapp-cta'),
+    document.getElementById('location-whatsapp-cta'),
+    document.getElementById('footer-whatsapp-cta')
+  ].filter(Boolean);
+
+  ctaButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Update the direct skip link inside quiz to preserve current button's prefilled URL
+      quizSkipBtn.href = btn.href;
+      openQuizModal();
+    });
+  });
+
+  closeQuiz.addEventListener('click', closeQuizModal);
+  quizModal.addEventListener('click', (e) => {
+    if (e.target === quizModal) closeQuizModal();
+  });
+
+  // Handle option selection & card transitions
+  const optionButtons = document.querySelectorAll('.quiz-option-btn');
+  optionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepCard = btn.closest('.quiz-step-card');
+      const stepIdx = quizSteps.indexOf(stepCard);
+      const val = btn.textContent.trim();
+
+      quizSelections[stepIdx] = val;
+
+      if (stepIdx < 2) {
+        // Go to next step
+        quizSteps[stepIdx].classList.remove('active');
+        currentQuizStep = stepIdx + 1;
+        quizSteps[currentQuizStep].classList.add('active');
+        quizProgress.style.width = `${((currentQuizStep + 1) / 3) * 100}%`;
+      } else {
+        // Quiz complete!
+        closeQuizModal();
+        const goal = quizSelections[0];
+        const lastCheckup = quizSelections[1];
+        const timeSlot = quizSelections[2];
+
+        // Format message
+        const message = `Hi Dr. Deogire, I'd like to book an appointment. I completed the Smile Assessment on your site:%0A- Goal: ${goal}%0A- Last Dental Visit: ${lastCheckup}%0A- Preferred Slot: ${timeSlot}%0AI'd like to schedule a consultation.`;
+        window.open(`https://wa.me/919222122343?text=${message}`, '_blank');
+      }
+    });
+  });
 </script>
+
+<!-- ═══════════════════════════════════════ QUIZ MODAL ══════════════════════════ -->
+<div class="quiz-modal-overlay" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="quiz-modal-card">
+    <button class="quiz-close-btn" id="closeQuiz" aria-label="Close quiz">×</button>
+    
+    <div class="quiz-progress-bar">
+      <div class="quiz-progress-fill" id="quizProgress" style="width: 33.3%;"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="quiz-step-card active" id="quizStep1">
+      <h3 class="quiz-step-title" id="quizTitle">What is your main dental goal?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option-btn" data-value="implant">🦷 Replace a missing tooth (Implant/Bridge)</button>
+        <button class="quiz-option-btn" data-value="braces">✨ Straighten my teeth (Aligners/Braces)</button>
+        <button class="quiz-option-btn" data-value="smile">🌟 Whiten & beautify my smile (Whitening/Veneers)</button>
+        <button class="quiz-option-btn" data-value="pain">⚡ Treat pain / dental decay (RCT/Fillings)</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="quiz-step-card" id="quizStep2">
+      <h3 class="quiz-step-title">When was your last dental visit?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option-btn" data-value="recent">Within the last 6 months</button>
+        <button class="quiz-option-btn" data-value="medium">1 to 2 years ago</button>
+        <button class="quiz-option-btn" data-value="old">More than 2 years ago</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="quiz-step-card" id="quizStep3">
+      <h3 class="quiz-step-title">Select your preferred timing:</h3>
+      <div class="quiz-options">
+        <button class="quiz-option-btn" data-value="morning">🌅 Morning slot (10:00 AM - 01:00 PM)</button>
+        <button class="quiz-option-btn" data-value="afternoon">☀️ Afternoon slot (01:00 PM - 05:00 PM)</button>
+        <button class="quiz-option-btn" data-value="evening">🌙 Evening slot (05:00 PM - 10:00 PM)</button>
+      </div>
+    </div>
+
+    <div class="quiz-footer">
+      <a href="https://wa.me/919222122343?text=Hi%2C+I%27d+like+to+book+an+appointment" target="_blank" rel="noopener" class="quiz-skip-link" id="quizSkipBtn">Skip quiz & book directly</a>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
