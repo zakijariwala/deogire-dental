@@ -1344,33 +1344,48 @@
     .jj-float {
       position: fixed;
       bottom: 28px;
-      right: 28px;
+      left: 28px;
       z-index: 90;
+      background: #111827;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.14);
+      text-decoration: none;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .jj-float:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.34), 0 2px 8px rgba(0,0,0,.14);
+    }
+    .jj-float-brand {
+      display: block;
+      padding: 7px 14px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      white-space: nowrap;
+    }
+    .jj-float-cta {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: #25D366;
-      color: #fff;
+      gap: 9px;
+      padding: 10px 16px 12px 14px;
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 600;
-      padding: 13px 20px 13px 16px;
-      border-radius: 100px;
-      box-shadow: 0 4px 20px rgba(37,211,102,.38), 0 2px 8px rgba(0,0,0,.10);
-      text-decoration: none;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+      color: #fff;
       white-space: nowrap;
       letter-spacing: .01em;
     }
-    .jj-float:hover {
-      background: #1dbb5a;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(37,211,102,.48), 0 2px 8px rgba(0,0,0,.10);
-    }
-    .jj-float svg { flex-shrink: 0; }
+    .jj-float-cta svg { flex-shrink: 0; color: #25D366; }
     @media (max-width: 480px) {
-      .jj-float { padding: 14px; border-radius: 50%; }
-      .jj-float-label { display: none; }
+      .jj-float-brand { display: none; }
+      .jj-float { border-radius: 12px; }
+      .jj-float-cta { font-size: 12px; padding: 10px 14px; }
     }
   </style>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
@@ -2195,11 +2210,14 @@
    target="_blank" rel="noopener"
    class="jj-float"
    aria-label="Contact JJ Consulting to build a website for your clinic">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/>
-  </svg>
-  <span class="jj-float-label">Get a site like this</span>
+  <span class="jj-float-brand">JJ Consulting</span>
+  <span class="jj-float-cta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/>
+    </svg>
+    Want a site like this?
+  </span>
 </a>
 
 </body>
