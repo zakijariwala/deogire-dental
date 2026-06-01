@@ -552,45 +552,14 @@
       margin-bottom: 20px;
     }
     .service-card-featured {
-      background: var(--charcoal);
-      border-radius: var(--radius-lg);
       padding: 36px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--transition), box-shadow var(--transition);
+      border-color: var(--stone);
     }
     .service-card-featured::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(27, 67, 50, .35) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .service-card-featured:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-    .service-card-featured .service-card-icon {
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.12);
-      color: var(--gold);
+      opacity: 1;
     }
     .service-card-featured .service-card-title {
-      color: #fff;
       font-size: 1.2rem;
-    }
-    .service-card-featured .service-card-desc {
-      color: rgba(255,255,255,.65);
-    }
-    .service-card-featured .btn-whatsapp {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    .service-card-featured .btn-whatsapp:hover {
-      background: var(--sage);
-      border-color: var(--sage);
     }
     @media (max-width: 640px) {
       .services-featured { grid-template-columns: 1fr; }
