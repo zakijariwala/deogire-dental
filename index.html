@@ -23,19 +23,19 @@
   <style>
     /* ─── DESIGN TOKENS ───────────────────────────────────────────── */
     :root {
-      --accent:       #B85C38; /* Change this one value per clinic */
-      --accent-light: rgba(184, 92, 56, 0.12);
-      --accent-dark:  #963E22;
-      --sage:       #B85C38;   /* terracotta primary */
-      --sage-light: #D4896E;   /* terracotta light   */
-      --sage-pale:  #F5E8E0;   /* terracotta wash    */
-      --warm-white: #FAF6F0;   /* cream base         */
-      --linen:      #F2EAD8;   /* deep cream / parchment */
-      --stone:      #E5D9C6;   /* warm stone border  */
-      --charcoal:   #2A2420;   /* warm-tinted dark   */
-      --warm-grey:  #6E6058;   /* warm grey text     */
-      --gold:       #B8934A;   /* muted gold primary */
-      --gold-light: #DFC48A;   /* muted gold light   */
+      --accent:       #1B4332; /* Change this one value per clinic */
+      --accent-light: rgba(27, 67, 50, 0.10);
+      --accent-dark:  #122B21;
+      --sage:       #1B4332;   /* forest green primary */
+      --sage-light: #40916C;   /* forest green light   */
+      --sage-pale:  #E8F0EC;   /* pale green wash      */
+      --warm-white: #F6F7F3;   /* off-white base       */
+      --linen:      #ECF0E8;   /* pale sage            */
+      --stone:      #D1D9D4;   /* green-stone border   */
+      --charcoal:   #1A2520;   /* dark forest          */
+      --warm-grey:  #4E6057;   /* forest grey text     */
+      --gold:       #C9A040;   /* amber primary        */
+      --gold-light: #E2C878;   /* amber light          */
       --radius-sm:  6px;
       --radius-md:  14px;
       --radius-lg:  28px;
@@ -81,14 +81,16 @@
       margin-bottom: 12px;
     }
     .section-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 500;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
       line-height: 1.15;
       color: var(--charcoal);
     }
     .section-title em {
       font-style: italic;
+      font-weight: 600;
       color: var(--sage);
     }
     .divider {
@@ -115,9 +117,9 @@
       letter-spacing: .01em;
     }
     .btn-whatsapp:hover {
-      background: #963E22;
+      background: #122B21;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(124,154,138,.35);
+      box-shadow: 0 8px 24px rgba(27, 67, 50, .30);
     }
     .btn-whatsapp svg { flex-shrink: 0; }
 
@@ -267,7 +269,7 @@
       position: relative;
       overflow: hidden; /* clips the bg-accent blobs that bleed outside */
       background: var(--warm-white);
-      background-image: radial-gradient(rgba(184, 92, 56, 0.05) 1.5px, transparent 1.5px);
+      background-image: radial-gradient(rgba(27, 67, 50, 0.05) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
       padding-top: 64px;
     }
@@ -381,9 +383,10 @@
     }
     .trust-stat { }
     .trust-stat-num {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 2rem;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.03em;
       color: var(--charcoal);
       line-height: 1;
     }
@@ -419,7 +422,7 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: rgba(184,92,56,.15);
+      background: rgba(27, 67, 50, .15);
     }
     .hero-main-card::after {
       content: '';
@@ -428,12 +431,12 @@
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      background: rgba(184,147,74,.12);
+      background: rgba(201, 160, 64, .12);
     }
     .hero-card-icon {
       width: 48px;
       height: 48px;
-      background: rgba(184,92,56,.18);
+      background: rgba(27, 67, 50, .18);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -494,6 +497,105 @@
       flex-shrink: 0;
     }
 
+    /* ─── TRUST METRICS BAR ──────────────────────────────────────── */
+    #trust-bar {
+      background: var(--charcoal);
+      padding: 0;
+    }
+    .trust-bar-inner {
+      display: flex;
+      align-items: stretch;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .trust-bar-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 24px;
+      border-right: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+    }
+    .trust-bar-stat:last-child { border-right: none; }
+    .trust-bar-num {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .trust-bar-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .02em;
+    }
+    @media (max-width: 640px) {
+      .trust-bar-inner { flex-wrap: wrap; }
+      .trust-bar-stat {
+        flex: 0 0 33.33%;
+        padding: 20px 12px;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+      }
+      .trust-bar-num { font-size: 1.5rem; }
+    }
+
+    /* ─── SERVICE FEATURED ────────────────────────────────────────── */
+    .services-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .service-card-featured {
+      background: var(--charcoal);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .service-card-featured::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(27, 67, 50, .35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .service-card-featured:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .service-card-featured .service-card-icon {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.12);
+      color: var(--gold);
+    }
+    .service-card-featured .service-card-title {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+    .service-card-featured .service-card-desc {
+      color: rgba(255,255,255,.65);
+    }
+    .service-card-featured .btn-whatsapp {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .service-card-featured .btn-whatsapp:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    @media (max-width: 640px) {
+      .services-featured { grid-template-columns: 1fr; }
+    }
+
     /* ─── WHY DR. DEOGIRE ─────────────────────────────────────────── */
     #why {
       background: var(--linen);
@@ -544,7 +646,7 @@
       justify-content: center;
       flex-shrink: 0;
       color: var(--sage);
-      border: 1px solid rgba(184,92,56,.12);
+      border: 1px solid rgba(27, 67, 50, .12);
     }
     .feature-text {
       font-size: 13.5px;
@@ -587,7 +689,7 @@
       color: var(--sage);
     }
     .why-badge {
-      background: linear-gradient(135deg, var(--charcoal) 0%, #3D2A1E 100%);
+      background: linear-gradient(135deg, var(--charcoal) 0%, #1A3A28 100%);
       color: #fff;
       border-radius: var(--radius-md);
       padding: 28px;
@@ -598,7 +700,7 @@
     .why-badge-icon {
       width: 52px;
       height: 52px;
-      background: rgba(184,92,56,.22);
+      background: rgba(27, 67, 50, .22);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -606,9 +708,10 @@
       flex-shrink: 0;
     }
     .why-badge-num {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 2.2rem;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.03em;
       color: var(--gold);
       line-height: 1;
     }
@@ -679,9 +782,10 @@
       color: var(--sage);
     }
     .service-card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1.1rem;
       font-weight: 600;
+      letter-spacing: -0.01em;
       color: var(--charcoal);
       margin-bottom: 10px;
     }
@@ -694,7 +798,7 @@
     /* ─── REVIEWS ─────────────────────────────────────────────────── */
     #reviews {
       padding: 100px 0;
-      background: linear-gradient(160deg, #2A2420 0%, #3D2A1E 100%);
+      background: linear-gradient(160deg, #0D2018 0%, #183328 100%);
     }
     .reviews-header { margin-bottom: 60px; }
     .reviews-header .section-label { color: var(--sage-light); }
@@ -709,9 +813,10 @@
       flex-wrap: wrap;
     }
     .reviews-big-num {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 5rem;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.04em;
       color: var(--gold);
       line-height: 1;
     }
@@ -741,7 +846,7 @@
     }
     .review-card:hover {
       background: rgba(255,255,255,.09);
-      border-color: rgba(184,147,74,.35);
+      border-color: rgba(201, 160, 64, .35);
     }
     .review-stars {
       display: flex;
@@ -798,8 +903,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(184,147,74,.13);
-      border: 1px solid rgba(184,147,74,.25);
+      background: rgba(201, 160, 64, .13);
+      border: 1px solid rgba(201, 160, 64, .25);
       color: var(--gold-light);
       font-size: 12px;
       font-weight: 500;
@@ -807,7 +912,7 @@
       border-radius: 100px;
     }
     .tag-count {
-      background: rgba(184,147,74,.22);
+      background: rgba(201, 160, 64, .22);
       color: var(--gold-light);
       font-size: 11px;
       font-weight: 600;
@@ -848,7 +953,7 @@
       height: 36px;
       background: var(--sage-pale);
       border-radius: 8px;
-      border: 1px solid rgba(184,92,56,.12);
+      border: 1px solid rgba(27, 67, 50, .12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -878,7 +983,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(184,92,56,.10);
+      background: rgba(27, 67, 50, .10);
       color: var(--sage);
       font-size: 12px;
       font-weight: 600;
@@ -898,8 +1003,8 @@
       height: 300px;
       background:
         linear-gradient(180deg, rgba(242,234,216,0) 60%, var(--warm-white) 100%),
-        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(184,92,56,.04) 28px, rgba(184,92,56,.04) 29px),
-        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(184,92,56,.04) 28px, rgba(184,92,56,.04) 29px),
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(27, 67, 50, .04) 28px, rgba(27, 67, 50, .04) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(27, 67, 50, .04) 28px, rgba(27, 67, 50, .04) 29px),
         var(--linen);
       display: flex;
       align-items: center;
@@ -913,7 +1018,7 @@
       background: var(--sage);
       border-radius: 50% 50% 50% 0;
       transform: rotate(-45deg);
-      box-shadow: 0 6px 24px rgba(184,92,56,.35);
+      box-shadow: 0 6px 24px rgba(27, 67, 50, .35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -968,7 +1073,7 @@
       text-decoration: none;
     }
     .map-directions-link:hover {
-      background: #963E22;
+      background: #122B21;
       transform: translateY(-1px);
     }
 
@@ -1037,7 +1142,7 @@
       border-color: var(--sage);
       color: #fff;
       transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
     }
     .step-label {
       margin-top: 12px;
@@ -1070,7 +1175,7 @@
       height: 80px;
       border-radius: var(--radius-md);
       background: var(--sage-pale);
-      border: 1px solid rgba(184, 92, 56, 0.15);
+      border: 1px solid rgba(27, 67, 50, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1078,9 +1183,10 @@
       color: var(--sage);
     }
     .safety-card-content h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1.15rem;
       font-weight: 600;
+      letter-spacing: -0.01em;
       color: var(--charcoal);
       margin-bottom: 12px;
     }
@@ -1126,7 +1232,7 @@
     .book-inner {
       background: 
         radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(135deg, #2A2420 0%, #3D2A1E 100%);
+        linear-gradient(135deg, #0D2018 0%, #183328 100%);
       background-size: 20px 20px, 100% 100%;
       border-radius: 32px;
       padding: 72px 60px;
@@ -1144,7 +1250,7 @@
       width: 320px;
       height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(184,92,56,.14) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(27, 67, 50, .14) 0%, transparent 70%);
       pointer-events: none;
     }
     .book-inner::after {
@@ -1154,19 +1260,20 @@
       width: 240px;
       height: 240px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(184,147,74,.10) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(201, 160, 64, .10) 0%, transparent 70%);
       pointer-events: none;
     }
     .book-label { color: var(--sage-light); }
     .book-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 500;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
       color: var(--warm-white);
       line-height: 1.15;
       margin: 12px 0 16px;
     }
-    .book-title em { color: var(--gold-light); font-style: italic; }
+    .book-title em { color: var(--gold-light); font-style: italic; font-weight: 600; }
     .book-desc {
       font-size: 15px;
       color: rgba(255,255,255,.6);
@@ -1197,9 +1304,9 @@
       white-space: nowrap;
     }
     .btn-whatsapp-lg:hover {
-      background: #963E22;
+      background: #122B21;
       transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(184,92,56,.40);
+      box-shadow: 0 12px 36px rgba(27, 67, 50, .40);
     }
     .book-phone {
       display: flex;
@@ -1214,7 +1321,7 @@
 
     /* ─── FOOTER ──────────────────────────────────────────────────── */
     footer {
-      background: #231A16;
+      background: #0B1A12;
       border-top: 1px solid rgba(255,255,255,.07);
       padding: 48px 24px 32px;
     }
@@ -1228,9 +1335,10 @@
       gap: 20px;
     }
     .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
       font-weight: 600;
+      letter-spacing: -0.01em;
       color: var(--warm-white);
     }
     .footer-brand span {
@@ -1334,7 +1442,7 @@
       #hero { min-height: auto; padding-top: 20px; }
       .hero-inner { grid-template-columns: 1fr; }
       body { font-size: 12px; }
-      .book-inner { background: #f5f5f5; color: #000; border-radius: 8px; }
+      .book-inner { background: #e8f0ec; color: #1a2520; border-radius: 8px; }
     }
 
     /* ─── STAR SVG ────────────────────────────────────────────────── */
@@ -1496,11 +1604,9 @@
       <h1 class="hero-title">
         Dr. Deogire<br><em>Super Speciality</em><br>Dental Clinic
       </h1>
-      <p class="hero-subtitle">Trusted by Nerul families for over a decade.</p>
       <p class="hero-desc">
-        Where advanced dentistry meets a calm, unhurried chair-side manner.
-        Dr. Gopal Deogire personally counsels every patient — because a confident
-        patient heals better than an anxious one.
+        Trusted by Nerul families for over a decade. Dr. Gopal Deogire brings advanced dentistry
+        and a calm, unhurried manner to every consultation. A confident patient heals better than an anxious one.
       </p>
 
       <div class="hero-actions">
@@ -1513,43 +1619,48 @@
           092221 22343
         </a>
       </div>
-
-      <div class="hero-trust-row" role="list" aria-label="Trust statistics">
-        <div class="trust-stat" role="listitem">
-          <div class="trust-stat-num">10+</div>
-          <div class="trust-stat-label">Years of practice</div>
-        </div>
-        <div class="trust-stat" role="listitem">
-          <div class="trust-stat-num">4.9★</div>
-          <div class="trust-stat-label">Google rating</div>
-        </div>
-        <div class="trust-stat" role="listitem">
-          <div class="trust-stat-num">212</div>
-          <div class="trust-stat-label">Patient reviews</div>
-        </div>
-      </div>
     </div>
 
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-card-stack">
         <div class="pill-1 hero-float-pill">
-          <span class="pill-dot"></span>
           Intra-oral imaging available
         </div>
         <div class="hero-main-card">
           <div class="hero-card-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#B85C38"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/><path d="M8 14h8"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#1B4332"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/><path d="M8 14h8"/></svg>
           </div>
           <p class="hero-card-quote">
-            "Being a dentist myself — this clinic is a perfect example of advanced technology and skilled doctors with soft-spoken staff."
+            "Being a dentist myself, I can say: this clinic is a perfect example of advanced technology and skilled, soft-spoken doctors."
           </p>
-          <p class="hero-card-author">— Dr. Amruta · Dentist, Verified Google Patient</p>
+          <p class="hero-card-author">Dr. Amruta · Dentist, Verified Google Patient</p>
         </div>
         <div class="pill-2 hero-float-pill">
-          <span class="pill-dot"></span>
           Open until 10 PM daily
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TRUST BAR ════════════════════════ -->
+<section id="trust-bar" aria-label="Trust metrics">
+  <div class="trust-bar-inner">
+    <div class="trust-bar-stat">
+      <div class="trust-bar-num">10+</div>
+      <div class="trust-bar-label">Years of practice</div>
+    </div>
+    <div class="trust-bar-stat">
+      <div class="trust-bar-num">4.9★</div>
+      <div class="trust-bar-label">Google rating</div>
+    </div>
+    <div class="trust-bar-stat">
+      <div class="trust-bar-num">212</div>
+      <div class="trust-bar-label">Patient reviews</div>
+    </div>
+    <div class="trust-bar-stat">
+      <div class="trust-bar-num">Open 10PM</div>
+      <div class="trust-bar-label">Mon to Sat</div>
     </div>
   </div>
 </section>
@@ -1563,7 +1674,7 @@
         <h2 class="section-title">Not just a dentist.<br><em>Your family's dentist.</em></h2>
         <div class="divider" aria-hidden="true"></div>
         <p class="why-body">
-          Dr. Gopal Deogire has been practicing in Nerul for over a decade —
+          Dr. Gopal Deogire has been practicing in Nerul for over a decade,
           quietly building a reputation that no advertisement could buy.
           Families travel from Panvel. Patients return after 10 years.
           Physicians refer their own families here.
@@ -1571,7 +1682,7 @@
           rushes a single consultation.
         </p>
         <p class="why-body" style="margin-bottom: 36px;">
-          The clinic uses 3M Z350 composite — a world-class filling material —
+          The clinic uses 3M Z350 composite, a world-class filling material,
           alongside intra-oral imaging so you can see exactly what your dentist sees.
           No guesswork. No unnecessary procedures.
         </p>
@@ -1638,7 +1749,7 @@
         </div>
 
         <div class="quote-block reveal reveal-delay-3">
-          <p class="quote-block-text">"I've been coming here for 10 years. The doctor understands patients' economic problems also — never compromises on quality."</p>
+          <p class="quote-block-text">"I've been coming here for 10 years. The doctor understands patients' economic problems. Never compromises on quality."</p>
           <p class="quote-block-author">Alka N. · 10-year patient</p>
         </div>
       </div>
@@ -1650,10 +1761,8 @@
 <section id="safety" aria-label="Sterilization Safety" style="padding: 100px 0; background: var(--warm-white); scroll-margin-top: 72px;">
   <div class="container">
     <div class="services-header reveal" style="margin-bottom: 50px;">
-      <p class="section-label">Uncompromising Hygiene</p>
       <h2 class="section-title">Class-B Autoclave<br><em>Advanced Sterilisation Protocol</em></h2>
-      <div class="divider" aria-hidden="true" style="margin: 20px auto 28px;"></div>
-      <p class="services-desc" style="max-width: 600px; margin: 0 auto;">
+      <p class="services-desc" style="max-width: 600px; margin: 20px auto 0;">
         We treat clinical safety with zero compromise. Our advanced 4-step sterilisation system is designed to deliver maximum protection for every patient.
       </p>
     </div>
@@ -1691,7 +1800,7 @@
           </div>
           <div class="safety-card-content">
             <h3>Step 1: Ultrasonic Debris Dislodgment</h3>
-            <p>Instruments undergo cavitation in an ultrasonic cleaner. High-frequency sound waves create micro-bubbles that dislodge microscopic physical particles, blood, and debris from the smallest crevices of oral tools—impossible to reach by manual scrubbing.</p>
+            <p>Instruments undergo cavitation in an ultrasonic cleaner. High-frequency sound waves dislodge debris from crevices that manual scrubbing cannot reach.</p>
           </div>
         </div>
 
@@ -1724,7 +1833,7 @@
           </div>
           <div class="safety-card-content">
             <h3>Step 4: Class-B Steam Sterilization</h3>
-            <p>The highest safety standard available. Pouched instruments are sterilised in our advanced Class-B Autoclave. Using high-pressure vacuum pulses and 134°C saturated steam, it targets even the most resistant bacterial spores — achieving clinical-grade sterility in every instrument.</p>
+            <p>The highest safety standard available. Pouched instruments are sterilised using high-pressure vacuum pulses and 134°C saturated steam, achieving clinical-grade sterility in every instrument.</p>
           </div>
         </div>
       </div>
@@ -1738,35 +1847,36 @@
     <div class="services-header reveal">
       <p class="section-label">What we treat</p>
       <h2 class="section-title">Comprehensive care,<br><em>one trusted clinic.</em></h2>
-      <div class="divider" aria-hidden="true"></div>
-      <p class="services-desc">
-        From your child's first check-up to complex implant surgery —
+      <p class="services-desc" style="margin-top: 16px;">
+        From your child's first check-up to complex implant surgery,
         handled with the same unhurried, expert attention.
       </p>
     </div>
-    <div class="services-grid" role="list" aria-label="Services offered">
-      <div class="service-card reveal" role="listitem">
+    <div class="services-featured" role="list" aria-label="Featured services">
+      <div class="service-card service-card-featured reveal" role="listitem">
         <div class="service-card-icon" aria-hidden="true">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
         <h3 class="service-card-title">Implant Surgery</h3>
-        <p class="service-card-desc">Permanent tooth replacement with precision implant placement. Dr. Deogire has successfully treated anxious implant patients who'd been afraid for years.</p>
+        <p class="service-card-desc">Permanent tooth replacement with precision implant placement. Dr. Deogire has treated anxious implant patients who had been putting it off for years.</p>
         <a href="https://wa.me/919222122343?text=Hello%2C+I+visited+your+website+and+would+like+to+consult+regarding+Dental+Implants." target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:20px;font-size:13px;padding:10px 20px;" aria-label="Enquire about Dental Implants via WhatsApp">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Enquire via WhatsApp
         </a>
       </div>
-      <div class="service-card reveal reveal-delay-1" role="listitem">
+      <div class="service-card service-card-featured reveal reveal-delay-1" role="listitem">
         <div class="service-card-icon" aria-hidden="true">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/></svg>
         </div>
         <h3 class="service-card-title">Root Canal Treatment</h3>
-        <p class="service-card-desc">Single or multi-session RCT using advanced protocols designed to minimise discomfort. Patients who feared root canals for over 12 years have described it as a smooth, comfortable experience.</p>
+        <p class="service-card-desc">Single or multi-session RCT using advanced protocols designed to minimise discomfort. Patients who feared root canals for years describe it as a smooth, comfortable experience.</p>
         <a href="https://wa.me/919222122343?text=Hello%2C+I+visited+your+website+and+would+like+to+consult+regarding+Root+Canal+Treatment." target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:20px;font-size:13px;padding:10px 20px;" aria-label="Enquire about Root Canal Treatment via WhatsApp">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Enquire via WhatsApp
         </a>
       </div>
+    </div>
+    <div class="services-grid" role="list" aria-label="Services offered">
       <div class="service-card reveal reveal-delay-2" role="listitem">
         <div class="service-card-icon" aria-hidden="true">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 014-4h6"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
@@ -1794,7 +1904,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M9 12h6M12 9v6"/></svg>
         </div>
         <h3 class="service-card-title">Dental Cap / Crown</h3>
-        <p class="service-card-desc">Precision-fitted crowns using digital scan technology for cap measurement — a newer, more accurate approach than traditional impressions.</p>
+        <p class="service-card-desc">Precision-fitted crowns using digital scan technology for cap measurement: a more accurate approach than traditional impressions.</p>
         <a href="https://wa.me/919222122343?text=Hello%2C+I+visited+your+website+and+would+like+to+know+your+appointment+availability." target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:20px;font-size:13px;padding:10px 20px;" aria-label="Enquire about Dental Cap / Crown via WhatsApp">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Enquire via WhatsApp
@@ -1816,7 +1926,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
         <h3 class="service-card-title">Paediatric Dentistry</h3>
-        <p class="service-card-desc">A gentle, child-friendly approach with doctors known for patience and friendliness. Children leave happy — not tearful.</p>
+        <p class="service-card-desc">A gentle, child-friendly approach with doctors known for patience. Children leave happy, not tearful.</p>
         <a href="https://wa.me/919222122343?text=Hello%2C+I+visited+your+website+and+would+like+to+book+an+appointment+for+my+child." target="_blank" rel="noopener" class="btn-whatsapp" style="margin-top:20px;font-size:13px;padding:10px 20px;" aria-label="Enquire about Paediatric Dentistry via WhatsApp">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.847L.057 23.882a.5.5 0 00.611.611l6.035-1.469A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.886a9.893 9.893 0 01-5.036-1.372l-.361-.214-3.741.911.93-3.675-.235-.379A9.887 9.887 0 012.114 12C2.114 6.58 6.58 2.114 12 2.114c5.421 0 9.886 4.466 9.886 9.886 0 5.421-4.465 9.886-9.886 9.886z"/></svg>
           Enquire via WhatsApp
@@ -1832,7 +1942,6 @@
     <div class="reviews-header reveal">
       <p class="section-label">What our patients say</p>
       <h2 class="section-title" style="color: var(--warm-white);">Words that no<br><em>advertisement can buy.</em></h2>
-      <div class="divider" aria-hidden="true"></div>
     </div>
     <div class="reviews-aggregate" aria-label="Overall rating">
       <div class="reviews-big-num" aria-label="4.9 stars">4.9</div>
@@ -1857,7 +1966,7 @@
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
         </div>
-        <p class="review-text">"I was avoiding dental work for 12 years out of fear of pain. He has done amazing work with my wisdom tooth root canal. I had gap and decay — all sorted. Absolutely painless."</p>
+        <p class="review-text">"I was avoiding dental work for 12 years out of fear of pain. He sorted my wisdom tooth root canal, gap, and decay. Absolutely smooth experience."</p>
         <div class="review-author">
           <div class="review-avatar" aria-hidden="true">J</div>
           <div>
@@ -1893,7 +2002,7 @@
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
         </div>
-        <p class="review-text">"Being a physician I must share — this clinic is highly advanced in terms of technology. Not just a neighbourhood clinic. Genuinely impressive."</p>
+        <p class="review-text">"Being a physician I must share: this clinic is highly advanced in terms of technology. Not just a neighbourhood clinic. Genuinely impressive."</p>
         <div class="review-author">
           <div class="review-avatar" aria-hidden="true">A</div>
           <div>
@@ -1947,7 +2056,7 @@
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
           <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
         </div>
-        <p class="review-text">"Smooth experience, saved my tooth — root canal, cleaning and dental cap. All staff is very cooperative and with expertise."</p>
+        <p class="review-text">"Smooth experience. Saved my tooth with root canal, cleaning, and a dental cap. All staff are cooperative and expert."</p>
         <div class="review-author">
           <div class="review-avatar" aria-hidden="true">P</div>
           <div>
@@ -1976,11 +2085,9 @@
   <div class="container">
     <div class="location-inner">
       <div class="location-info">
-        <p class="section-label reveal">Find us</p>
         <h2 class="section-title reveal">Come see us<br><em>in Nerul.</em></h2>
-        <div class="divider reveal" aria-hidden="true"></div>
 
-        <div class="location-address-block reveal">
+        <div class="location-address-block reveal" style="margin-top: 24px;">
           <div class="location-detail-row">
             <div class="location-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1988,7 +2095,7 @@
             <div>
               <div class="location-detail-label">Address</div>
               <div class="location-detail-value">
-                Shop A3, Shreeji Darshan,<br>Plot 49, Station Road,<br>Nerul, Navi Mumbai — 400706
+                Shop A3, Shreeji Darshan,<br>Plot 49, Station Road,<br>Nerul, Navi Mumbai 400706
               </div>
             </div>
           </div>
@@ -2004,7 +2111,7 @@
               </div>
               <div class="hours-highlight" aria-label="Open late">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                Open until 10 PM — ideal for working professionals
+                Open until 10 PM, ideal for working professionals
               </div>
             </div>
           </div>
@@ -2025,7 +2132,7 @@
             </div>
             <div>
               <div class="location-detail-label">Booking</div>
-              <div class="location-detail-value">Appointment recommended — walk-ins welcome subject to availability</div>
+              <div class="location-detail-value">Appointment recommended; walk-ins welcome subject to availability</div>
             </div>
           </div>
           <div class="location-detail-row">
@@ -2081,11 +2188,9 @@
   <div class="container">
     <div class="book-inner">
       <div>
-        <p class="section-label book-label">Ready when you are</p>
         <h2 class="book-title">Book an appointment<br>with <em>Dr. Deogire.</em></h2>
         <p class="book-desc">
-          No forms. No waiting rooms (needlessly). Just a WhatsApp message or a phone call
-          — and you're in. Evening slots available until 10 PM.
+          No forms. No waiting rooms (needlessly). Just a WhatsApp message or a phone call. You're in. Evening slots available until 10 PM.
         </p>
       </div>
       <div class="book-actions">
@@ -2118,9 +2223,8 @@
       <a href="tel:+919222122343">Call Us</a>
     </nav>
     <p class="footer-bottom">
-      © <span id="year"></span> Dr. Deogire Super Speciality Dental Clinic ·
-      Shop A3, Shreeji Darshan, Plot 49, Station Road, Nerul, Navi Mumbai 400706
-      · 4.9★ on Google · 212 Reviews
+      © <span id="year"></span> Dr. Deogire Super Speciality Dental Clinic<br>
+      Shop A3, Shreeji Darshan, Plot 49, Station Road, Nerul, Navi Mumbai 400706 · 4.9★ on Google · 212 Reviews
     </p>
   </div>
 </footer>
