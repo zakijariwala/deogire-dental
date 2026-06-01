@@ -23,19 +23,16 @@
   <style>
     /* ─── DESIGN TOKENS ───────────────────────────────────────────── */
     :root {
-      --accent:       #1B4332; /* Change this one value per clinic */
-      --accent-light: rgba(27, 67, 50, 0.10);
-      --accent-dark:  #122B21;
-      --sage:       #1B4332;   /* forest green primary */
-      --sage-light: #40916C;   /* forest green light   */
-      --sage-pale:  #E8F0EC;   /* pale green wash      */
-      --warm-white: #F6F7F3;   /* off-white base       */
-      --linen:      #ECF0E8;   /* pale sage            */
-      --stone:      #D1D9D4;   /* green-stone border   */
-      --charcoal:   #1A2520;   /* dark forest          */
-      --warm-grey:  #4E6057;   /* forest grey text     */
-      --gold:       #C9A040;   /* amber primary        */
-      --gold-light: #E2C878;   /* amber light          */
+      --sage:       #B85C38;   /* terracotta primary */
+      --sage-light: #D4896E;   /* terracotta light   */
+      --sage-pale:  #F5E8E0;   /* terracotta wash    */
+      --warm-white: #FAF6F0;   /* cream base         */
+      --linen:      #F2EAD8;   /* deep cream / parchment */
+      --stone:      #E5D9C6;   /* warm stone border  */
+      --charcoal:   #2A2420;   /* warm-tinted dark   */
+      --warm-grey:  #6E6058;   /* warm grey text     */
+      --gold:       #B8934A;   /* muted gold primary */
+      --gold-light: #DFC48A;   /* muted gold light   */
       --radius-sm:  6px;
       --radius-md:  14px;
       --radius-lg:  28px;
@@ -117,9 +114,9 @@
       letter-spacing: .01em;
     }
     .btn-whatsapp:hover {
-      background: #122B21;
+      background: #963E22;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(27, 67, 50, .30);
+      box-shadow: 0 8px 24px rgba(184, 92, 56, .30);
     }
     .btn-whatsapp svg { flex-shrink: 0; }
 
@@ -269,7 +266,7 @@
       position: relative;
       overflow: hidden; /* clips the bg-accent blobs that bleed outside */
       background: var(--warm-white);
-      background-image: radial-gradient(rgba(27, 67, 50, 0.05) 1.5px, transparent 1.5px);
+      background-image: radial-gradient(rgba(184, 92, 56, 0.05) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
       padding-top: 64px;
     }
@@ -422,7 +419,7 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: rgba(27, 67, 50, .15);
+      background: rgba(184, 92, 56, .15);
     }
     .hero-main-card::after {
       content: '';
@@ -431,12 +428,12 @@
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      background: rgba(201, 160, 64, .12);
+      background: rgba(184, 147, 74, .12);
     }
     .hero-card-icon {
       width: 48px;
       height: 48px;
-      background: rgba(27, 67, 50, .18);
+      background: rgba(184, 92, 56, .18);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -615,7 +612,7 @@
       justify-content: center;
       flex-shrink: 0;
       color: var(--sage);
-      border: 1px solid rgba(27, 67, 50, .12);
+      border: 1px solid rgba(184, 92, 56, .12);
     }
     .feature-text {
       font-size: 13.5px;
@@ -658,7 +655,7 @@
       color: var(--sage);
     }
     .why-badge {
-      background: linear-gradient(135deg, var(--charcoal) 0%, #1A3A28 100%);
+      background: linear-gradient(135deg, var(--charcoal) 0%, #3D2A1E 100%);
       color: #fff;
       border-radius: var(--radius-md);
       padding: 28px;
@@ -669,7 +666,7 @@
     .why-badge-icon {
       width: 52px;
       height: 52px;
-      background: rgba(27, 67, 50, .22);
+      background: rgba(184, 92, 56, .22);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -767,7 +764,7 @@
     /* ─── REVIEWS ─────────────────────────────────────────────────── */
     #reviews {
       padding: 100px 0;
-      background: linear-gradient(160deg, #0D2018 0%, #183328 100%);
+      background: linear-gradient(160deg, #2A2420 0%, #3D2A1E 100%);
     }
     .reviews-header { margin-bottom: 60px; }
     .reviews-header .section-label { color: var(--sage-light); }
@@ -815,7 +812,7 @@
     }
     .review-card:hover {
       background: rgba(255,255,255,.09);
-      border-color: rgba(201, 160, 64, .35);
+      border-color: rgba(184, 147, 74, .35);
     }
     .review-stars {
       display: flex;
@@ -872,8 +869,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(201, 160, 64, .13);
-      border: 1px solid rgba(201, 160, 64, .25);
+      background: rgba(184, 147, 74, .13);
+      border: 1px solid rgba(184, 147, 74, .25);
       color: var(--gold-light);
       font-size: 12px;
       font-weight: 500;
@@ -881,7 +878,7 @@
       border-radius: 100px;
     }
     .tag-count {
-      background: rgba(201, 160, 64, .22);
+      background: rgba(184, 147, 74, .22);
       color: var(--gold-light);
       font-size: 11px;
       font-weight: 600;
@@ -922,7 +919,7 @@
       height: 36px;
       background: var(--sage-pale);
       border-radius: 8px;
-      border: 1px solid rgba(27, 67, 50, .12);
+      border: 1px solid rgba(184, 92, 56, .12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -952,7 +949,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(27, 67, 50, .10);
+      background: rgba(184, 92, 56, .10);
       color: var(--sage);
       font-size: 12px;
       font-weight: 600;
@@ -972,8 +969,8 @@
       height: 300px;
       background:
         linear-gradient(180deg, rgba(242,234,216,0) 60%, var(--warm-white) 100%),
-        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(27, 67, 50, .04) 28px, rgba(27, 67, 50, .04) 29px),
-        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(27, 67, 50, .04) 28px, rgba(27, 67, 50, .04) 29px),
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(184, 92, 56, .04) 28px, rgba(184, 92, 56, .04) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(184, 92, 56, .04) 28px, rgba(184, 92, 56, .04) 29px),
         var(--linen);
       display: flex;
       align-items: center;
@@ -987,7 +984,7 @@
       background: var(--sage);
       border-radius: 50% 50% 50% 0;
       transform: rotate(-45deg);
-      box-shadow: 0 6px 24px rgba(27, 67, 50, .35);
+      box-shadow: 0 6px 24px rgba(184, 92, 56, .35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1042,7 +1039,7 @@
       text-decoration: none;
     }
     .map-directions-link:hover {
-      background: #122B21;
+      background: #963E22;
       transform: translateY(-1px);
     }
 
@@ -1111,7 +1108,7 @@
       border-color: var(--sage);
       color: #fff;
       transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+      box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
     }
     .step-label {
       margin-top: 12px;
@@ -1144,7 +1141,7 @@
       height: 80px;
       border-radius: var(--radius-md);
       background: var(--sage-pale);
-      border: 1px solid rgba(27, 67, 50, 0.15);
+      border: 1px solid rgba(184, 92, 56, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1201,7 +1198,7 @@
     .book-inner {
       background: 
         radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(135deg, #0D2018 0%, #183328 100%);
+        linear-gradient(135deg, #2A2420 0%, #3D2A1E 100%);
       background-size: 20px 20px, 100% 100%;
       border-radius: 32px;
       padding: 72px 60px;
@@ -1219,7 +1216,7 @@
       width: 320px;
       height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(27, 67, 50, .14) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(184, 92, 56, .14) 0%, transparent 70%);
       pointer-events: none;
     }
     .book-inner::after {
@@ -1229,7 +1226,7 @@
       width: 240px;
       height: 240px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(201, 160, 64, .10) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(184, 147, 74, .10) 0%, transparent 70%);
       pointer-events: none;
     }
     .book-label { color: var(--sage-light); }
@@ -1273,9 +1270,9 @@
       white-space: nowrap;
     }
     .btn-whatsapp-lg:hover {
-      background: #122B21;
+      background: #963E22;
       transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(27, 67, 50, .40);
+      box-shadow: 0 12px 36px rgba(184, 92, 56, .40);
     }
     .book-phone {
       display: flex;
@@ -1290,7 +1287,7 @@
 
     /* ─── FOOTER ──────────────────────────────────────────────────── */
     footer {
-      background: #0B1A12;
+      background: #231A16;
       border-top: 1px solid rgba(255,255,255,.07);
       padding: 48px 24px 32px;
     }
@@ -1411,7 +1408,7 @@
       #hero { min-height: auto; padding-top: 20px; }
       .hero-inner { grid-template-columns: 1fr; }
       body { font-size: 12px; }
-      .book-inner { background: #e8f0ec; color: #1a2520; border-radius: 8px; }
+      .book-inner { background: #f5e8e0; color: #2A2420; border-radius: 8px; }
     }
 
     /* ─── STAR SVG ────────────────────────────────────────────────── */
@@ -1597,7 +1594,7 @@
         </div>
         <div class="hero-main-card">
           <div class="hero-card-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#1B4332"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/><path d="M8 14h8"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#B85C38"><path d="M12 2a4 4 0 014 4v2H8V6a4 4 0 014-4z"/><path d="M8 8v8a6 6 0 0012 0V8"/><path d="M8 14h8"/></svg>
           </div>
           <p class="hero-card-quote">
             "Being a dentist myself, I can say: this clinic is a perfect example of advanced technology and skilled, soft-spoken doctors."
