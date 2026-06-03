@@ -2325,29 +2325,18 @@
     }
 
     if (video) {
-      // 1. Set muted as both property AND attribute — some mobile browsers check one, some the other.
       video.muted = true;
-      video.defaultMuted = true; // survives load() calls
-
-      const tryPlay = () => {
-        if (!video.paused) return;
-        video.muted = true; // re-assert before each play attempt
-        video.play().catch(() => {});
-      };
-
-      // 2. Explicitly call load() — mobile browsers silently downgrade preload="auto"
-      //    to none/metadata and never buffer. load() forces it to start.
-      video.load();
-
-      // 3. Try on loadedmetadata (fires early, just needs dimensions) AND canplay.
-      video.addEventListener('loadedmetadata', tryPlay, { once: true });
+      video.defaultMuted = true;
+      const tryPlay = () => { video.muted = true; video.play().catch(() => {}); };
       video.addEventListener('canplay', tryPlay, { once: true });
-
-      // 4. Hard fallback: Low Power Mode / Data Saver block all autoplay API calls.
-      //    First finger-touch anywhere on the page will start the video silently.
-      document.addEventListener('touchstart', () => {
-        if (video.paused) tryPlay();
-      }, { once: true, passive: true });
+      tryPlay();
+      // The user scrolls to see the intro — any gesture starts the video where autoplay is blocked.
+      ['scroll', 'pointerdown', 'touchend', 'click'].forEach(ev =>
+        window.addEventListener(ev, function go() {
+          if (video.paused) tryPlay();
+          if (!video.paused) ['scroll','pointerdown','touchend','click'].forEach(e => window.removeEventListener(e, go));
+        }, { passive: true })
+      );
     }
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
