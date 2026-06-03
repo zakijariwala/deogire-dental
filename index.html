@@ -2324,11 +2324,22 @@
       return;
     }
 
-    // Mobile autoplay: set muted as a JS property (HTML attribute alone is ignored by some
-    // mobile browsers, which then block autoplay thinking the video has audio).
+    // Mobile autoplay: muted must be set as a JS property (the HTML attribute is ignored
+    // by some mobile browsers). Call play() only after canplay fires so the browser has
+    // confirmed it can stream; fall back to first touchstart for Low Power Mode / Data Saver.
     if (video) {
       video.muted = true;
-      video.play().catch(() => { /* autoplay blocked — poster stays visible */ });
+      const tryPlay = () => video.play().catch(() => {});
+      if (video.readyState >= 3) {
+        tryPlay();
+      } else {
+        video.addEventListener('canplay', tryPlay, { once: true });
+      }
+      // Last-resort fallback: first finger tap starts the video
+      document.addEventListener('touchstart', function onTouch() {
+        if (video.paused) tryPlay();
+        document.removeEventListener('touchstart', onTouch);
+      }, { once: true, passive: true });
     }
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
