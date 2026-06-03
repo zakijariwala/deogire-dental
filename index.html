@@ -168,7 +168,7 @@
       height: 100%;
       object-fit: cover;
       background: var(--charcoal);  /* graceful fallback until/if the file loads */
-      will-change: opacity;
+      /* no will-change: iOS suspends video playback when promoted to its own layer inside a sticky ancestor */
     }
     .intro-overlay {                /* legibility scrim + bottom blend into the warm-white hero */
       position: absolute;
@@ -2327,16 +2327,18 @@
     if (video) {
       video.muted = true;
       video.defaultMuted = true;
-      const tryPlay = () => { video.muted = true; video.play().catch(() => {}); };
-      video.addEventListener('canplay', tryPlay, { once: true });
+      const tryPlay = () => { video.muted = true; video.load(); video.play().catch(() => {}); };
+      video.addEventListener('canplay', () => { video.muted = true; video.play().catch(() => {}); }, { once: true });
       tryPlay();
-      // The user scrolls to see the intro — any gesture starts the video where autoplay is blocked.
-      ['scroll', 'pointerdown', 'touchend', 'click'].forEach(ev =>
-        window.addEventListener(ev, function go() {
-          if (video.paused) tryPlay();
-          if (!video.paused) ['scroll','pointerdown','touchend','click'].forEach(e => window.removeEventListener(e, go));
-        }, { passive: true })
-      );
+      // Gesture fallback where autoplay is blocked. Bind to the intro element itself (iOS
+      // Firefox/Brave require the gesture target to be the media/container, not window) AND window.
+      const targets = [intro, window];
+      const events = ['touchend', 'pointerup', 'click', 'scroll'];
+      const go = () => {
+        if (video.paused) { video.muted = true; video.play().catch(() => {}); }
+        if (!video.paused) targets.forEach(t => events.forEach(e => t.removeEventListener(e, go)));
+      };
+      targets.forEach(t => events.forEach(e => t.addEventListener(e, go, { passive: true })));
     }
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
