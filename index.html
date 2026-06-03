@@ -2324,21 +2324,29 @@
       return;
     }
 
-    // Mobile autoplay: muted must be set as a JS property (the HTML attribute is ignored
-    // by some mobile browsers). Call play() only after canplay fires so the browser has
-    // confirmed it can stream; fall back to first touchstart for Low Power Mode / Data Saver.
     if (video) {
+      // 1. Set muted as both property AND attribute — some mobile browsers check one, some the other.
       video.muted = true;
-      const tryPlay = () => video.play().catch(() => {});
-      if (video.readyState >= 3) {
-        tryPlay();
-      } else {
-        video.addEventListener('canplay', tryPlay, { once: true });
-      }
-      // Last-resort fallback: first finger tap starts the video
-      document.addEventListener('touchstart', function onTouch() {
+      video.defaultMuted = true; // survives load() calls
+
+      const tryPlay = () => {
+        if (!video.paused) return;
+        video.muted = true; // re-assert before each play attempt
+        video.play().catch(() => {});
+      };
+
+      // 2. Explicitly call load() — mobile browsers silently downgrade preload="auto"
+      //    to none/metadata and never buffer. load() forces it to start.
+      video.load();
+
+      // 3. Try on loadedmetadata (fires early, just needs dimensions) AND canplay.
+      video.addEventListener('loadedmetadata', tryPlay, { once: true });
+      video.addEventListener('canplay', tryPlay, { once: true });
+
+      // 4. Hard fallback: Low Power Mode / Data Saver block all autoplay API calls.
+      //    First finger-touch anywhere on the page will start the video silently.
+      document.addEventListener('touchstart', () => {
         if (video.paused) tryPlay();
-        document.removeEventListener('touchstart', onTouch);
       }, { once: true, passive: true });
     }
 
