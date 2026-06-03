@@ -1604,7 +1604,7 @@
 <!-- [MISSING ASSET: assets/dr-deogire-intro-poster.jpg — first-frame poster shown before the video loads.] -->
 <section id="intro" aria-label="Dr. Deogire introduction">
   <div class="intro-sticky">
-    <video class="intro-video" autoplay muted loop playsinline preload="auto"
+    <video class="intro-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
            poster="assets/dr-deogire-intro-poster.jpg" aria-hidden="true">
       <source src="assets/dr-deogire-intro.mp4" type="video/mp4">
     </video>
@@ -2322,6 +2322,13 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       if (video) { try { video.pause(); } catch (e) {} }
       return;
+    }
+
+    // Mobile autoplay: set muted as a JS property (HTML attribute alone is ignored by some
+    // mobile browsers, which then block autoplay thinking the video has audio).
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => { /* autoplay blocked — poster stays visible */ });
     }
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
