@@ -79,6 +79,28 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════ INTRO VIDEO ════════════════════════ -->
+<!-- Full-viewport intro header. Self-hosted video ONLY — build-rule A6 bans third-party embeds (YouTube/Vimeo set cookies). -->
+<!-- [MISSING ASSET: assets/dr-deogire-intro.mp4 — supply a self-hosted H.264 MP4 of the doctor's introduction. Keep it short/looping; it autoplays muted.] -->
+<!-- [MISSING ASSET: assets/dr-deogire-intro-poster.jpg — first-frame poster shown before the video loads.] -->
+<section id="intro" aria-label="Dr. Deogire introduction">
+  <div class="intro-sticky">
+    <video class="intro-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
+           poster="assets/dr-deogire-intro-poster.jpg" aria-hidden="true">
+      <source src="assets/dr-deogire-intro.mp4" type="video/mp4">
+    </video>
+    <div class="intro-overlay" aria-hidden="true"></div>
+    <div class="intro-name">
+      Dr. Deogire
+      <small>Super Speciality Dental Clinic · Nerul</small>
+    </div>
+    <div class="intro-scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════ -->
 <nav id="navbar">
   <div class="nav-inner">
@@ -763,6 +785,62 @@
 
 <!-- ═══════════════════════════════════════ JS ════════════════════════════════ -->
 <script>
+  // ─── Intro video header: name drifts down + video fades into the hero ───
+  (function () {
+    const intro = document.getElementById('intro');
+    if (!intro) return;
+    const video   = intro.querySelector('.intro-video');
+    const overlay = intro.querySelector('.intro-overlay');
+    const name    = intro.querySelector('.intro-name');
+    const hint    = intro.querySelector('.intro-scroll-hint');
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (video) { try { video.pause(); } catch (e) {} }
+      return;
+    }
+
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const tryPlay = () => { video.muted = true; video.load(); video.play().catch(() => {}); };
+      video.addEventListener('canplay', () => { video.muted = true; video.play().catch(() => {}); }, { once: true });
+      tryPlay();
+      const targets = [intro, window];
+      const events = ['touchend', 'pointerup', 'click', 'scroll'];
+      const go = () => {
+        if (video.paused) { video.muted = true; video.play().catch(() => {}); }
+        if (!video.paused) targets.forEach(t => events.forEach(e => t.removeEventListener(e, go)));
+      };
+      targets.forEach(t => events.forEach(e => t.addEventListener(e, go, { passive: true })));
+    }
+
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const ramp  = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const vh = window.innerHeight;
+      const pinDist = intro.offsetHeight - vh;
+      const y = window.scrollY;
+      const p = pinDist > 0 ? clamp(y / pinDist, 0, 1) : 0;
+      const q = clamp((y - pinDist) / vh, 0, 1);
+      const fade = 1 - q;
+
+      if (name) {
+        name.style.transform = 'translateY(' + (p * vh * 0.4).toFixed(1) + 'px)';
+        name.style.opacity = (1 - ramp(p, 0.5, 1)).toFixed(3);
+      }
+      if (video)   video.style.opacity   = fade.toFixed(3);
+      if (overlay) overlay.style.opacity = fade.toFixed(3);
+      if (hint)    hint.style.opacity     = (1 - ramp(p, 0, 0.18)).toFixed(3);
+    }
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+
   // Sticky nav shadow
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
