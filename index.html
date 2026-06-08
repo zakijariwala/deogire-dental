@@ -154,11 +154,15 @@
       position: sticky;
       top: 0;
       height: 100svh;
-      overflow: hidden;
+      /* clip-path instead of overflow:hidden — overflow:hidden on a sticky ancestor
+         triggers a separate compositing layer on iOS that blocks muted autoplay */
+      clip-path: inset(0);
       z-index: 150;                /* above the fixed navbar (z-100) while pinned, then scrolls away */
       display: flex;
       align-items: center;
       justify-content: center;
+      /* poster image as background: shows if the video element is hidden/missing */
+      background: var(--charcoal) url(assets/dr-deogire-intro-poster.jpg) center/cover no-repeat;
     }
     .intro-video {
       position: absolute;
@@ -2326,18 +2330,32 @@
     if (video) {
       video.muted = true;
       video.defaultMuted = true;
-      const tryPlay = () => { video.muted = true; video.load(); video.play().catch(() => {}); };
-      video.addEventListener('canplay', () => { video.muted = true; video.play().catch(() => {}); }, { once: true });
-      tryPlay();
-      // Gesture fallback where autoplay is blocked. Bind to the intro element itself (iOS
-      // Firefox/Brave require the gesture target to be the media/container, not window) AND window.
+      // No video.load() call — calling load() resets readyState to 0 and fires a new
+      // canplay cycle, which on iOS drops the pending play() call and the gesture context.
+      const attempt = () => { video.muted = true; video.play().catch(() => {}); };
+      if (video.readyState >= 2) {
+        attempt();
+      } else {
+        video.addEventListener('canplay', attempt, { once: true });
+      }
+      // Poster fallback: if video hasn't started within 3s (iOS Low Power Mode, data-saver,
+      // or any remaining blocking condition), hide the element — the poster set on
+      // .intro-sticky shows through and the scroll animation continues normally.
+      let hasPlayed = false;
+      video.addEventListener('playing', () => { hasPlayed = true; }, { once: true });
+      video.addEventListener('error', () => { video.style.display = 'none'; });
+      setTimeout(() => {
+        if (!hasPlayed && video.paused) video.style.display = 'none';
+      }, 3000);
+      // Gesture fallback for iOS — scroll is excluded because it does not satisfy
+      // iOS's user-gesture requirement for autoplay.
       const targets = [intro, window];
-      const events = ['touchend', 'pointerup', 'click', 'scroll'];
+      const gestureEvents = ['touchend', 'pointerup', 'click'];
       const go = () => {
         if (video.paused) { video.muted = true; video.play().catch(() => {}); }
-        if (!video.paused) targets.forEach(t => events.forEach(e => t.removeEventListener(e, go)));
+        if (!video.paused) targets.forEach(t => gestureEvents.forEach(e => t.removeEventListener(e, go)));
       };
-      targets.forEach(t => events.forEach(e => t.addEventListener(e, go, { passive: true })));
+      targets.forEach(t => gestureEvents.forEach(e => t.addEventListener(e, go, { passive: true })));
     }
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
