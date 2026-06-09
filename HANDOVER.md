@@ -21,10 +21,10 @@ It is **not a template** — it is a real client site. Dr. Deogire is likely to 
 |---|---|
 | NMC compliance | ✅ Clean (fixed this session, commit `5c8beb0`) |
 | Indexed by Google | ❌ `noindex, nofollow` — intentional until go-live |
-| `og-image.jpg` | ❌ Missing — social/WhatsApp previews show no image |
+| `og-image.jpg` | ✅ Added — 1200×630 crop of the intro poster |
 | Cloudflare beacon token | ❌ Placeholder — analytics not active |
-| Mobile video | ⚠️ Bug present — playback unreliable; unresolved after 5 attempts |
-| GPS coordinates in schema | ❌ Not added — placeholder in JSON-LD |
+| Mobile video | ✅ Fix applied (clip-path + no load() reset + poster fallback) — verify on a real iPhone before demoing |
+| GPS coordinates in schema | ⚠️ Nerul-locality level added — refine to exact shopfront coords at go-live |
 | Domain CNAME | ❌ Not configured |
 
 ---

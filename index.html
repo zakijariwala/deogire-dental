@@ -1551,7 +1551,7 @@
   </style>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "PLACEHOLDER_TOKEN"}'></script>
-  <!-- MISSING: GPS coordinates — get from Google Maps URL (@LAT,LNG) and add to geo below before go-live -->
+  <!-- geo is Nerul-locality level (Wikipedia). Refine to exact shopfront coords from Google Maps (@LAT,LNG) at go-live. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1567,6 +1567,11 @@
       "addressRegion": "Maharashtra",
       "postalCode": "400706",
       "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 19.0330,
+      "longitude": 73.0200
     },
     "openingHoursSpecification": [
       {
@@ -1603,8 +1608,7 @@
 
 <!-- ═══════════════════════════════════════ INTRO VIDEO ════════════════════════ -->
 <!-- Full-viewport intro header. Self-hosted video ONLY — build-rule A6 bans third-party embeds (YouTube/Vimeo set cookies). -->
-<!-- [MISSING ASSET: assets/dr-deogire-intro.mp4 — supply a self-hosted H.264 MP4 of the doctor's introduction. Keep it short/looping; it autoplays muted.] -->
-<!-- [MISSING ASSET: assets/dr-deogire-intro-poster.jpg — first-frame poster shown before the video loads.] -->
+<!-- assets/dr-deogire-intro.mp4 + poster are in place. Keep replacements short/looping; it autoplays muted. -->
 <section id="intro" aria-label="Dr. Deogire introduction">
   <div class="intro-sticky">
     <video class="intro-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
