@@ -78,6 +78,32 @@ Default section order:
 
 When the user requests a durable behavior change, record it here or in the relevant child AGENTS.md
 
-## Child DOX Index
+---
 
-This project is not yet indexed. Before continuing you must scan the project, build the DOX tree and replace this message with the actual index. Go deep and scan files recursively to properly evaluate complexity and create nested DOX files where needed.
+## Purpose
+Live (but unlisted) demo site for Dr. Deogire Super Speciality Dental Clinic, Nerul. Shown to prospects as JJ Consulting proof-of-work. Currently `noindex, nofollow` — invisible to Google until principal authorises go-live.
+
+## Ownership
+Principal (Zaki Jariwala). Client: Dr. Deogire. NMC compliance responsibility rests with JJ Consulting on all copy.
+
+## Local Contracts
+- **noindex MUST stay** until principal explicitly authorises go-live and go-live checklist is complete
+- **Two phone numbers — never swap them:**
+  - `919222122343` = clinic WhatsApp (all patient-facing CTAs)
+  - `919157564545` = Zaki's JJ number (the floating "Built by JJ" badge only)
+- **NMC hard rules** (apply to all files, all copy, all future edits):
+  - No "painless" anywhere
+  - No comparative superlatives (best, better than, #1, most experienced)
+  - No "permanent" for implants — always "long-term"
+  - "A confident patient heals better than an anxious one" is patient psychology, not a comparative claim — permitted
+- **build-rules.md and content-rules.md are binding** — read them before editing any copy or HTML structure
+- **iOS video fix** — `.intro-sticky` uses `clip-path: inset(0)`, NOT `overflow: hidden`. Do not revert.
+- **Go-live blockers** (do not index until all resolved):
+  - Cloudflare beacon token: replace `PLACEHOLDER_TOKEN` in index.html
+  - GPS coordinates: refine from locality-level (19.0330, 73.0200) to exact shopfront
+  - Domain CNAME: not configured
+  - og-image.jpg exists but is a poster crop — update with branded image at go-live
+
+## Child DOX Index
+- `css/` — Extracted stylesheet. iOS autoplay constraints documented. → `css/AGENTS.md`
+- `assets/` — Clinic media (intro video + poster). NMC and licensing rules. → `assets/AGENTS.md`
