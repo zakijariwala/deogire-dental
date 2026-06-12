@@ -27,7 +27,7 @@
     html {
       scroll-behavior: smooth;
       font-size: 16px;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -35,7 +35,7 @@
       color: var(--charcoal);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -94,7 +94,7 @@
       letter-spacing: .01em;
     }
     .btn-whatsapp:hover {
-      background: #963E22;
+      background: var(--accent-dark);
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(184, 92, 56, .30);
     }
@@ -133,11 +133,15 @@
       position: sticky;
       top: 0;
       height: 100svh;
-      overflow: hidden;
+      /* clip-path instead of overflow:hidden — overflow:hidden on a sticky ancestor
+         triggers a separate compositing layer on iOS that blocks muted autoplay */
+      clip-path: inset(0);
       z-index: 150;
       display: flex;
       align-items: center;
       justify-content: center;
+      /* poster image as background: shows if the video element is hidden/missing */
+      background: var(--charcoal) url(../assets/dr-deogire-intro-poster.jpg) center/cover no-repeat;
     }
     .intro-video {
       position: absolute;
