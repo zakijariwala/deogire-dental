@@ -1,27 +1,20 @@
 ---
 /**
- * Derm-aesthetic block template (reference template, approved Phase 3).
- * Section order per config/blocks.json:
- *   hero → services_grid → about_doctor → why_us → gallery(gated) →
- *   hours_location → contact_cta → footer
- * Render rules: build-blocking gaps show DATA NEEDED panels; optional
- * sections with no data are omitted; gallery renders only past the
- * compliance gate (rule 3).
+ * ENT block template (config/blocks.json): the generic services grid is
+ * replaced by a symptom-led grid (ear / nose / throat / sinus / voice).
+ * Grouping is presentation-only; supplied services are never padded.
  */
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/700.css';
-import '@fontsource-variable/inter';
+import '@fontsource-variable/ibm-plex-sans';
 import DemoLayout from '../layouts/DemoLayout.astro';
 import DemoHeader from '../components/DemoHeader.astro';
 import Hero from '../components/Hero.astro';
-import ServicesGrid from '../components/ServicesGrid.astro';
+import GroupedServicesGrid from '../components/GroupedServicesGrid.astro';
 import AboutDoctor from '../components/AboutDoctor.astro';
 import WhyUs from '../components/WhyUs.astro';
-import Gallery from '../components/Gallery.astro';
 import HoursLocation from '../components/HoursLocation.astro';
 import ContactCta from '../components/ContactCta.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { blockMeta, complianceAllows, has, paletteFor, type ClinicData } from '../lib/site';
+import { blockMeta, has, paletteFor, type ClinicData } from '../lib/site';
 
 interface Props {
   clinic: ClinicData;
@@ -35,6 +28,14 @@ const title = has(clinic, 'meta_title')
   ? (clinic.meta_title as string)
   : `${clinic.display_name ?? 'Clinic preview'} | ${specialty}`;
 
+const symptomGroups = [
+  { label: 'Ear', keywords: ['ear', 'hearing', 'tinnitus', 'otitis', 'wax'] },
+  { label: 'Nose', keywords: ['nose', 'nasal', 'rhin', 'septum', 'smell'] },
+  { label: 'Throat', keywords: ['throat', 'tonsil', 'swallow', 'pharyn', 'adenoid'] },
+  { label: 'Sinus', keywords: ['sinus'] },
+  { label: 'Voice', keywords: ['voice', 'vocal', 'laryn', 'hoarse'] },
+];
+
 const showAboutDoctor =
   has(clinic, 'doctor_name') || has(clinic, 'qualifications') || has(clinic, 'bio') || has(clinic, 'years_experience');
 const showWhyUs = has(clinic, 'usp') || has(clinic, 'years_experience') || has(clinic, 'rating') || has(clinic, 'languages');
@@ -44,10 +45,9 @@ const showWhyUs = has(clinic, 'usp') || has(clinic, 'years_experience') || has(c
   <DemoHeader clinic={clinic} />
   <main>
     <Hero clinic={clinic} specialty={specialty} />
-    <ServicesGrid clinic={clinic} />
+    <GroupedServicesGrid clinic={clinic} heading="Care by symptom area" groups={symptomGroups} fallbackLabel="General ENT care" />
     {showAboutDoctor && <AboutDoctor clinic={clinic} />}
     {showWhyUs && <WhyUs clinic={clinic} />}
-    {complianceAllows(clinic, 'before_after') && <Gallery clinic={clinic} />}
     <HoursLocation clinic={clinic} />
     <ContactCta clinic={clinic} />
   </main>

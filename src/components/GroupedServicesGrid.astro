@@ -1,0 +1,70 @@
+---
+/**
+ * Symptom-led (ENT) and treatment-led (ophthalmology) service grids.
+ * Grouping is presentation-only (config/blocks.json): supplied services are
+ * sorted under groups by keyword match on the service name; services that
+ * match no group land under fallbackLabel; empty groups are omitted. The
+ * services themselves are never invented to fill a group (rule 1).
+ */
+import DataNeeded from './DataNeeded.astro';
+import { has, type ClinicData } from '../lib/site';
+
+interface Group {
+  label: string;
+  keywords: string[];
+}
+interface Props {
+  clinic: ClinicData;
+  heading: string;
+  groups: Group[];
+  fallbackLabel: string;
+}
+const { clinic, heading, groups, fallbackLabel } = Astro.props;
+
+type Service = { name: string; description?: string };
+const services = (clinic.services as Service[] | undefined) ?? [];
+
+const grouped: { label: string; items: Service[] }[] = groups.map((g) => ({ label: g.label, items: [] }));
+const rest: Service[] = [];
+for (const s of services) {
+  const name = s.name.toLowerCase();
+  const idx = groups.findIndex((g) => g.keywords.some((k) => name.includes(k)));
+  if (idx >= 0) grouped[idx].items.push(s);
+  else rest.push(s);
+}
+if (rest.length > 0) grouped.push({ label: fallbackLabel, items: rest });
+const nonEmpty = grouped.filter((g) => g.items.length > 0);
+---
+
+<section class="border-t border-(--c-text)/10">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">{heading}</h2>
+    {
+      has(clinic, 'services') ? (
+        <div class="mt-10 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2">
+          {nonEmpty.map((g) => (
+            <div>
+              <h3 class="text-sm font-semibold uppercase tracking-[0.12em] text-(--c-accent-safe)">{g.label}</h3>
+              <ul class="mt-4 space-y-4">
+                {g.items.map((s) => (
+                  <li class="rounded-2xl border border-(--c-text)/10 bg-(--c-surface) p-5">
+                    <p class="font-semibold text-(--c-text)">{s.name}</p>
+                    {s.description && <p class="mt-1 text-sm leading-relaxed text-(--c-muted)">{s.description}</p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8 max-w-2xl">
+          <DataNeeded
+            fields={['services']}
+            source="client"
+            hint="Intake Q11. Supplied services are grouped by area on this page; nothing is assumed on the clinic's behalf."
+          />
+        </div>
+      )
+    }
+  </div>
+</section>

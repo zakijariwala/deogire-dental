@@ -5,7 +5,8 @@
   "description": "Contract for one clinic demo. Group A (block-level) is constant across a specialty block — set once in blocks.json/tokens.json and referenced here. Group B (clinic-level) is populated per clinic. Every Group B field's provenance is tracked in data_status as web | client | missing (plus draft, for model-generated copy awaiting operator review, Phase 6b only). Fields marked x-build-blocking render a visible DATA NEEDED placeholder when missing — never a guess.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["slug", "block_id", "demo_token", "prospect_status", "display_name", "data_status"],
+  "required": ["slug", "block_id", "demo_token", "prospect_status", "data_status"],
+  "$comment": "display_name is build-blocking but deliberately NOT schema-required: a clinic record must be storable before its data arrives (rule 1 degrades missing build-blocking fields to visible placeholders, which requires the record to exist).",
   "properties": {
 
     "block_id": {

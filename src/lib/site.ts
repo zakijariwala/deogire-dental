@@ -27,8 +27,28 @@ export interface Palette {
 
 export const BLOCK_IDS = ['dental', 'vet', 'ent', 'ophthalmology', 'derm-aesthetic', 'plastic-surgery'] as const;
 
-/** Blocks whose template exists. Grows as Phase 4 lands. */
-export const BUILT_BLOCKS = ['derm-aesthetic'] as const;
+/** Blocks whose template exists. */
+export const BUILT_BLOCKS = ['dental', 'vet', 'ent', 'ophthalmology', 'derm-aesthetic', 'plastic-surgery'] as const;
+
+/**
+ * tokens.json names fonts by display name; fontsource-variable packages
+ * register them as '<Name> Variable'. Static-weight packages keep the plain
+ * name. Each block template imports its own two font packages.
+ */
+const FONT_FAMILY: Record<string, string> = {
+  Inter: 'Inter Variable',
+  Manrope: 'Manrope Variable',
+  Nunito: 'Nunito Variable',
+  'Source Sans 3': 'Source Sans 3 Variable',
+  'IBM Plex Sans': 'IBM Plex Sans Variable',
+  'Space Grotesk': 'Space Grotesk Variable',
+  'Playfair Display': 'Playfair Display Variable',
+  'Cormorant Garamond': 'Cormorant Garamond',
+};
+
+export function fontFamilyName(displayName: string): string {
+  return FONT_FAMILY[displayName] ?? displayName;
+}
 
 export const HQ_SECRET: string = import.meta.env.HQ_SECRET ?? (demo as { hq_secret: string }).hq_secret;
 export const hqBase = `/hq-${HQ_SECRET}`;

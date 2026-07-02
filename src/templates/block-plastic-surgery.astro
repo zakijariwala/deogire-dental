@@ -1,20 +1,21 @@
 ---
 /**
- * Derm-aesthetic block template (reference template, approved Phase 3).
- * Section order per config/blocks.json:
- *   hero → services_grid → about_doctor → why_us → gallery(gated) →
- *   hours_location → contact_cta → footer
- * Render rules: build-blocking gaps show DATA NEEDED panels; optional
- * sections with no data are omitted; gallery renders only past the
- * compliance gate (rule 3).
+ * Plastic-surgery block template (config/blocks.json): the base skeleton
+ * plus procedure_detail and safety_credentials:
+ *   hero → services_grid → procedure_detail → safety_credentials →
+ *   about_doctor → why_us → gallery(gated) → hours_location →
+ *   contact_cta → footer
+ * ProcedureDetail renders only when services exist so the DATA NEEDED
+ * panel for services appears once, in the grid.
  */
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/700.css';
+import '@fontsource-variable/playfair-display';
 import '@fontsource-variable/inter';
 import DemoLayout from '../layouts/DemoLayout.astro';
 import DemoHeader from '../components/DemoHeader.astro';
 import Hero from '../components/Hero.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
+import ProcedureDetail from '../components/ProcedureDetail.astro';
+import SafetyCredentials from '../components/SafetyCredentials.astro';
 import AboutDoctor from '../components/AboutDoctor.astro';
 import WhyUs from '../components/WhyUs.astro';
 import Gallery from '../components/Gallery.astro';
@@ -45,6 +46,8 @@ const showWhyUs = has(clinic, 'usp') || has(clinic, 'years_experience') || has(c
   <main>
     <Hero clinic={clinic} specialty={specialty} />
     <ServicesGrid clinic={clinic} />
+    {has(clinic, 'services') && <ProcedureDetail clinic={clinic} />}
+    <SafetyCredentials clinic={clinic} />
     {showAboutDoctor && <AboutDoctor clinic={clinic} />}
     {showWhyUs && <WhyUs clinic={clinic} />}
     {complianceAllows(clinic, 'before_after') && <Gallery clinic={clinic} />}

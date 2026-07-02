@@ -1,15 +1,11 @@
 ---
 /**
- * Derm-aesthetic block template (reference template, approved Phase 3).
- * Section order per config/blocks.json:
+ * Dental block template. Same skeleton as derm-aesthetic (config/blocks.json):
  *   hero → services_grid → about_doctor → why_us → gallery(gated) →
  *   hours_location → contact_cta → footer
- * Render rules: build-blocking gaps show DATA NEEDED panels; optional
- * sections with no data are omitted; gallery renders only past the
- * compliance gate (rule 3).
+ * Only tokens and fonts differ.
  */
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/700.css';
+import '@fontsource-variable/manrope';
 import '@fontsource-variable/inter';
 import DemoLayout from '../layouts/DemoLayout.astro';
 import DemoHeader from '../components/DemoHeader.astro';

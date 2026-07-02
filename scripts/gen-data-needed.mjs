@@ -25,7 +25,11 @@ const SOURCE = {
 const BLOCKING = new Set(['display_name', 'address_full', 'services']);
 const CONTACT = ['phone_e164', 'whatsapp', 'email'];
 
-const files = (await readdir(CLINICS_DIR)).filter((f) => f.endsWith('.json') && !f.startsWith('_')).sort();
+// '-reference' stubs exist only to prove templates render (rule 5); their
+// gaps are not chase-able data, so they stay out of this log.
+const files = (await readdir(CLINICS_DIR))
+  .filter((f) => f.endsWith('.json') && !f.startsWith('_') && !f.endsWith('-reference.json'))
+  .sort();
 const today = new Date().toISOString().slice(0, 10);
 
 let out = `# DATA-NEEDED — outstanding clinic data gaps

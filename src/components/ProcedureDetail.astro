@@ -1,0 +1,39 @@
+---
+/**
+ * Plastic-surgery procedure detail: a longer-form pass over the same
+ * services[] data, with published fees where the clinic consented (intake
+ * Q12). The template renders this only when services exist, so it never
+ * duplicates the services_grid DATA NEEDED panel.
+ */
+import { type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+
+type Service = { name: string; description?: string };
+type Fee = { service: string; amount: string };
+const services = (clinic.services as Service[] | undefined) ?? [];
+const fees = (clinic.fees as Fee[] | undefined) ?? [];
+const feeFor = (name: string) => fees.find((f) => f.service.toLowerCase() === name.toLowerCase())?.amount;
+---
+
+<section class="border-t border-(--c-text)/10 bg-(--c-surface)">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">Procedures in detail</h2>
+    <div class="mt-10 divide-y divide-(--c-text)/10">
+      {
+        services.map((s) => (
+          <div class="grid grid-cols-1 gap-2 py-6 md:grid-cols-12 md:gap-8">
+            <h3 class="text-lg font-semibold text-(--c-text) md:col-span-4">{s.name}</h3>
+            <div class="md:col-span-8">
+              {s.description && <p class="max-w-[65ch] leading-relaxed text-(--c-muted)">{s.description}</p>}
+              {feeFor(s.name) && <p class="mt-2 text-sm font-medium text-(--c-text)">Fee: {feeFor(s.name)}</p>}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

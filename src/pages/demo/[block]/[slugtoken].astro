@@ -6,7 +6,12 @@
  */
 import { getCollection } from 'astro:content';
 import { BUILT_BLOCKS, type ClinicData } from '../../../lib/site';
+import BlockDental from '../../../templates/block-dental.astro';
+import BlockVet from '../../../templates/block-vet.astro';
+import BlockEnt from '../../../templates/block-ent.astro';
+import BlockOphthalmology from '../../../templates/block-ophthalmology.astro';
 import BlockDermAesthetic from '../../../templates/block-derm-aesthetic.astro';
+import BlockPlasticSurgery from '../../../templates/block-plastic-surgery.astro';
 
 export async function getStaticPaths() {
   const clinics = await getCollection('clinics');
@@ -21,7 +26,12 @@ export async function getStaticPaths() {
 const { clinic } = Astro.props as { clinic: ClinicData };
 
 const templates: Record<string, typeof BlockDermAesthetic> = {
+  dental: BlockDental,
+  vet: BlockVet,
+  ent: BlockEnt,
+  ophthalmology: BlockOphthalmology,
   'derm-aesthetic': BlockDermAesthetic,
+  'plastic-surgery': BlockPlasticSurgery,
 };
 const Template = templates[clinic.block_id];
 ---

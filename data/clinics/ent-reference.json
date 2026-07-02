@@ -1,0 +1,24 @@
+{
+  "_note": "Reference stub: proves the ent template renders with zero clinic data (rule 5). Replace with a real prospect from the operator's list; no clinic names are invented (rule 1).",
+  "block_id": "ent",
+  "palette_ref": "ent",
+  "allowed_content": { "testimonials": false, "before_after": false, "superiority_claims": false },
+  "slug": "ent-reference",
+  "demo_token": "fa2d17b3",
+  "prospect_status": "prospect",
+  "data_status": {
+    "display_name": "missing", "doctor_name": "missing", "qualifications": "missing",
+    "council_reg_no": "missing", "years_experience": "missing", "bio": "missing",
+    "services": "missing", "fees": "missing",
+    "address_full": "missing", "sector": "missing", "city": "missing", "pincode": "missing",
+    "lat": "missing", "lng": "missing", "place_id": "missing", "maps_embed_url": "missing",
+    "phone_e164": "missing", "whatsapp": "missing", "email": "missing",
+    "hours": "missing", "languages": "missing",
+    "existing_url": "missing", "existing_url_status": "missing", "gbp_url": "missing",
+    "rating": "missing", "reviews": "missing",
+    "primary_keyword": "missing", "secondary_keywords": "missing",
+    "meta_title": "missing", "meta_description": "missing", "usp": "missing",
+    "logo": "missing", "headshot": "missing", "interior_photos": "missing"
+  },
+  "sources": {}
+}

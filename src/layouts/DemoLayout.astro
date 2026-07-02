@@ -5,11 +5,8 @@
  * noindex meta (belt to the _headers braces) and the preview notice.
  */
 import '../styles/global.css';
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/700.css';
-import '@fontsource-variable/inter';
 import PreviewNotice from '../components/PreviewNotice.astro';
-import type { Palette } from '../lib/site';
+import { fontFamilyName, type Palette } from '../lib/site';
 
 interface Props {
   title: string;
@@ -28,8 +25,8 @@ const vars = [
   `--c-surface: ${palette.surface}`,
   `--c-text: ${palette.text}`,
   `--c-muted: ${palette.muted}`,
-  `--f-heading: '${palette.fonts.heading}'`,
-  `--f-body: '${palette.fonts.body === 'Inter' ? 'Inter Variable' : palette.fonts.body}'`,
+  `--f-heading: '${fontFamilyName(palette.fonts.heading)}'`,
+  `--f-body: '${fontFamilyName(palette.fonts.body)}'`,
 ].join('; ');
 ---
 
