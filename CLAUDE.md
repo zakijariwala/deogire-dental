@@ -1,10 +1,30 @@
-# CLAUDE.md — Clinic Sites Mono-Repo: Standing Rules
+# CLAUDE.md — Clinic Demo Pipeline: Standing Rules
 
-This repository generates marketing websites for medical / dental / veterinary
-clinics in Navi Mumbai: 6 templated specialty blocks covering 43 clinics.
+This repository generates **demo / prospecting websites** for medical / dental
+/ veterinary clinics in Navi Mumbai: 6 templated specialty blocks covering 43
+prospects. It is a sales tool. **Nothing in this repo ever serves production
+traffic** — when a prospect signs, their site is rebuilt and deployed from a
+separate dedicated repository (out of scope here).
 
 **Stack:** Astro (static output), TypeScript, Astro Content Collections for
 clinic data, Tailwind CSS, deployed to Cloudflare Pages. No external CMS.
+
+## Topology (decided 2026-07-02)
+
+One Cloudflare Pages project, deployed as a single build containing all demos:
+
+```
+<project>.pages.dev
+├── /hq-<SECRET>/                    operator-only index (unguessable path):
+│   └── /hq-<SECRET>/<block>/        lists all 6 blocks → per-block pages
+│                                    listing every prospect demo in that block
+└── /demo/<block>/<slug>-<token>/    shareable prospect demo (per-prospect
+                                     unguessable token)
+```
+
+Access control is private-by-link (unguessable paths), enforced by rule 7.
+The Phase 1 schema must therefore carry demo-routing fields: `demo_token`
+(random, unguessable, never reused across prospects) and `prospect_status`.
 
 These rules govern **every** prompt, phase, and edit in this repo. They are not
 suggestions. When a rule conflicts with getting a page built faster, the rule
@@ -63,6 +83,27 @@ Where a structural decision has real trade-offs (routing, build topology,
 data shape, dependency choices), stop and present the options rather than
 picking silently.
 
+## 7. Demo privacy invariants
+
+This deployment is private-by-link. Every build must preserve all of these:
+
+- **No indexing, ever.** `robots.txt` disallows everything; a `_headers` file
+  sets `X-Robots-Tag: noindex, nofollow` on every route. No `sitemap.xml` is
+  ever emitted in the demo deployment (Phase 6b builds SEO artifacts to
+  *demonstrate and validate* them, not to expose them).
+- **No upward or sideways links.** A prospect demo page never links to the HQ
+  index, any block page, or any other prospect's demo. The `hq-<SECRET>` path
+  must not appear anywhere in demo-page output.
+- **No referrer leakage.** `Referrer-Policy: no-referrer` on every route, so
+  navigating from HQ to a demo never exposes the secret path.
+- **Unguessable URLs.** Every demo path carries its per-prospect `demo_token`;
+  `/demo/` and `/demo/<block>/` serve no listing (404). Tokens are random,
+  never sequential, never reused, and never published anywhere public.
+- **Know the limit.** This is link-based privacy, not authentication — anyone
+  holding a demo link sees that demo (and only that demo). If real auth is
+  ever needed on HQ, the upgrade is a custom domain + Cloudflare Access on
+  `/hq*`; do not attempt to fake auth in static output.
+
 ---
 
 ## Repo map
@@ -85,11 +126,15 @@ operator instruction.
 
 ## Phase gates (🛑 = stop for operator approval)
 
-0. 🛑 Bootstrap + governance (this file) + topology decision
-1. 🛑 `/config/schema.json` + `_example.json`
+0. 🛑 Bootstrap + governance (this file) + topology decision — **done 2026-07-02**
+1. 🛑 `/config/schema.json` + `_example.json` (must include `demo_token`,
+   `prospect_status`)
 2. 🛑 `/config/tokens.json` (6 block palettes)
 3. 🛑 `/config/blocks.json` + derm-aesthetic reference template
 4. 🛑 Remaining 5 block templates + reference renders
 5. Data ingestion loop (batch by batch; never fill unprovided fields)
-6. 🛑 Compliance pass, then SEO + JSON-LD
-7. Deploy + QA go/no-go per clinic
+6. 🛑 Compliance pass, then SEO + JSON-LD (built and validated, but kept
+   non-indexable per rule 7 — no public sitemap in the demo deployment)
+7. Demo deploy + QA go/no-go per prospect (single Pages project). Go-live is
+   **not** part of this repo: a signed clinic's production site ships from a
+   separate dedicated repository.
