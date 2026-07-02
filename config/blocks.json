@@ -1,0 +1,5 @@
+{
+  "_status": "STUB — populated in Phase 3 after operator approval",
+  "_purpose": "Ordered section list per block and which schema fields feed each section. Base skeleton: hero → services_grid → about_doctor → why_us → hours_location → contact_cta → footer.",
+  "_blocks": ["dental", "vet", "ent", "ophthalmology", "derm-aesthetic", "plastic-surgery"]
+}

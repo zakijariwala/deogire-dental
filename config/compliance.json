@@ -1,0 +1,10 @@
+{
+  "_status": "STUB — populated in Phase 6a; boolean values set ONLY by the operator after verifying current NMC / DCI / state veterinary council guidance",
+  "_rule": "Until a flag is explicitly true, the content type does not render. null and false both mean OFF.",
+  "_shape_per_block": {
+    "testimonials": null,
+    "before_after": null,
+    "superiority_claims": null,
+    "disclaimers_required": []
+  }
+}

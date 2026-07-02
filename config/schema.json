@@ -1,0 +1,4 @@
+{
+  "_status": "STUB — populated in Phase 1 after operator approval",
+  "_purpose": "JSON Schema for a single clinic: block-level constants + clinic-level fields with per-field data_status provenance (web | client | missing)."
+}
