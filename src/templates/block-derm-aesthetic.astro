@@ -1,0 +1,66 @@
+---
+/**
+ * Derm-aesthetic block template (reference template, Phase 3).
+ * Section order per config/blocks.json:
+ *   hero → services_grid → about_doctor → why_us → gallery(gated) →
+ *   hours_location → contact_cta → footer
+ * Render rules: build-blocking gaps show DATA NEEDED panels; optional
+ * sections with no data are omitted; gallery renders only past the
+ * compliance gate (rule 3).
+ */
+import DemoLayout from '../layouts/DemoLayout.astro';
+import Hero from '../components/Hero.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import AboutDoctor from '../components/AboutDoctor.astro';
+import WhyUs from '../components/WhyUs.astro';
+import Gallery from '../components/Gallery.astro';
+import HoursLocation from '../components/HoursLocation.astro';
+import ContactCta from '../components/ContactCta.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { blockMeta, complianceAllows, has, paletteFor, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+
+const palette = paletteFor(clinic.palette_ref ?? clinic.block_id);
+const meta = blockMeta(clinic.block_id);
+const specialty = (clinic.specialty as string) ?? meta.specialty;
+const title = has(clinic, 'meta_title')
+  ? (clinic.meta_title as string)
+  : `${clinic.display_name ?? 'Clinic preview'} | ${specialty}`;
+
+const showAboutDoctor =
+  has(clinic, 'doctor_name') || has(clinic, 'qualifications') || has(clinic, 'bio') || has(clinic, 'years_experience');
+const showWhyUs = has(clinic, 'usp') || has(clinic, 'years_experience') || has(clinic, 'rating') || has(clinic, 'languages');
+---
+
+<DemoLayout title={title} palette={palette}>
+  <header class="border-b border-(--c-text)/10">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <span class="font-(family-name:--font-heading) text-lg font-semibold text-(--c-text)">
+        {has(clinic, 'display_name') ? clinic.display_name : 'Clinic preview'}
+      </span>
+      {
+        has(clinic, 'phone_e164') && (
+          <a href={`tel:${clinic.phone_e164}`} class="rounded-full bg-(--c-primary) px-5 py-2 text-sm font-semibold text-white">
+            Call the clinic
+          </a>
+        )
+      }
+    </div>
+  </header>
+
+  <main>
+    <Hero clinic={clinic} specialty={specialty} />
+    <ServicesGrid clinic={clinic} />
+    {showAboutDoctor && <AboutDoctor clinic={clinic} />}
+    {showWhyUs && <WhyUs clinic={clinic} />}
+    {complianceAllows(clinic, 'before_after') && <Gallery clinic={clinic} />}
+    <HoursLocation clinic={clinic} />
+    <ContactCta clinic={clinic} />
+  </main>
+
+  <SiteFooter clinic={clinic} />
+</DemoLayout>

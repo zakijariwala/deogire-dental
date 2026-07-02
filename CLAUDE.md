@@ -99,6 +99,10 @@ This deployment is private-by-link. Every build must preserve all of these:
 - **Unguessable URLs.** Every demo path carries its per-prospect `demo_token`;
   `/demo/` and `/demo/<block>/` serve no listing (404). Tokens are random,
   never sequential, never reused, and never published anywhere public.
+- **Every demo page is labelled.** Each prospect demo carries a discreet but
+  always-visible "Preview — not a live website" notice, so a circulating link
+  can never be mistaken for the clinic's real published site. The notice is
+  removed only in the separate go-live repository, never here.
 - **Know the limit.** This is link-based privacy, not authentication — anyone
   holding a demo link sees that demo (and only that demo). If real auth is
   ever needed on HQ, the upgrade is a custom domain + Cloudflare Access on

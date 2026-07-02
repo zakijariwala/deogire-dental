@@ -1,0 +1,22 @@
+{
+  "name": "clinic-demo-pipeline",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run gen:data-needed && astro build",
+    "preview": "astro preview",
+    "gen:data-needed": "node scripts/gen-data-needed.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.0.0",
+    "@fontsource/cormorant-garamond": "^5.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "playwright-core": "^1.61.1",
+    "tailwindcss": "^4.0.0"
+  }
+}

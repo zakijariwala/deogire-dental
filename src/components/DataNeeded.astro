@@ -1,0 +1,31 @@
+---
+/**
+ * Visible placeholder for a missing field (CLAUDE.md rule 1). Renders an
+ * unmistakable dashed panel — never plausible-looking content. `source` says
+ * who can supply the datum: 'client' (intake form) or 'web' (research pull).
+ */
+interface Props {
+  fields: string[];
+  source: 'client' | 'web' | 'mixed';
+  hint?: string;
+  compact?: boolean;
+}
+const { fields, source, hint, compact = false } = Astro.props;
+const sourceLabel = { client: 'clinic intake form', web: 'web research pull', mixed: 'intake + web research' }[source];
+---
+
+<div
+  class:list={[
+    'rounded-2xl border-2 border-dashed border-(--c-primary)/40 bg-(--c-surface)',
+    compact ? 'px-4 py-3' : 'px-6 py-8',
+  ]}
+  role="note"
+>
+  <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-(--c-primary)">Data needed</p>
+  <p class:list={['font-medium text-(--c-text)', compact ? 'mt-1 text-sm' : 'mt-2 text-base']}>
+    {fields.join(', ')}
+  </p>
+  <p class="mt-1 text-sm text-(--c-muted)">
+    Comes from the {sourceLabel}.{hint ? ` ${hint}` : ''}
+  </p>
+</div>

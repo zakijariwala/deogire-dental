@@ -1,0 +1,99 @@
+{
+  "block_id": "derm-aesthetic",
+  "specialty": "Dermatology & Aesthetics",
+  "schema_org_type": "MedicalClinic",
+  "palette_ref": "derm-aesthetic",
+  "allowed_content": { "testimonials": false, "before_after": false, "superiority_claims": false },
+
+  "slug": "example-placeholder",
+  "demo_token": "zzz000",
+  "prospect_status": "prospect",
+
+  "display_name": "Example Placeholder Skin Clinic (FAKE)",
+  "doctor_name": "Dr. Example Placeholder (FAKE)",
+  "qualifications": "MBBS, MD (Fake University)",
+  "council_reg_no": "FAKE-000000",
+  "years_experience": 99,
+  "bio": "This is placeholder biography text demonstrating the field shape. It is not a real person.",
+
+  "services": [
+    { "name": "Example Service One", "description": "Placeholder description of a service." },
+    { "name": "Example Service Two", "description": "Placeholder description of another service." }
+  ],
+  "fees": [
+    { "service": "Example Service One", "amount": "₹0 (fake)" }
+  ],
+
+  "address_full": "0, Example Building, Fake Road, Sector 0, Nowhere, Navi Mumbai 400000",
+  "sector": "Sector 0, Nowhere",
+  "city": "Navi Mumbai",
+  "pincode": "400000",
+  "lat": 0.0,
+  "lng": 0.0,
+  "place_id": "FAKE_PLACE_ID",
+  "maps_embed_url": "https://www.google.com/maps/embed?pb=FAKE",
+
+  "phone_e164": "+910000000000",
+  "whatsapp": "+910000000000",
+  "email": "fake@example.com",
+  "hours": {
+    "mon": "10:00–14:00, 17:00–21:00",
+    "tue": "10:00–14:00, 17:00–21:00",
+    "wed": "10:00–14:00, 17:00–21:00",
+    "thu": "10:00–14:00, 17:00–21:00",
+    "fri": "10:00–14:00, 17:00–21:00",
+    "sat": "10:00–14:00",
+    "sun": "Closed"
+  },
+  "languages": ["English", "Examplish"],
+
+  "existing_url": "https://example.com",
+  "existing_url_status": "thin",
+  "gbp_url": "https://maps.google.com/?cid=FAKE",
+
+  "rating": {
+    "value": 0.0,
+    "count": 0,
+    "source_url": "https://example.com/fake-gbp",
+    "pulled_on": "1970-01-01"
+  },
+  "reviews": [
+    {
+      "text": "Placeholder review text — not a real review.",
+      "author": "F. Ake",
+      "source": "https://example.com/fake-review",
+      "pulled_on": "1970-01-01",
+      "compliance_checked": false
+    }
+  ],
+
+  "primary_keyword": "example dermatologist in nowhere",
+  "secondary_keywords": ["fake keyword one", "fake keyword two"],
+  "meta_title": "Example Placeholder Skin Clinic | Nowhere (FAKE)",
+  "meta_description": "Placeholder meta description demonstrating the field shape. Not real copy.",
+  "usp": "A placeholder differentiator line supplied by a fake clinic.",
+
+  "logo": "/assets/clinics/example-placeholder/logo.svg",
+  "headshot": "/assets/clinics/example-placeholder/headshot.jpg",
+  "interior_photos": ["/assets/clinics/example-placeholder/interior-1.jpg"],
+
+  "data_status": {
+    "display_name": "client", "doctor_name": "client", "qualifications": "client",
+    "council_reg_no": "client", "years_experience": "client", "bio": "client",
+    "services": "client", "fees": "client",
+    "address_full": "web", "sector": "web", "city": "web", "pincode": "web",
+    "lat": "web", "lng": "web", "place_id": "web", "maps_embed_url": "web",
+    "phone_e164": "client", "whatsapp": "client", "email": "client",
+    "hours": "web", "languages": "client",
+    "existing_url": "web", "existing_url_status": "web", "gbp_url": "web",
+    "rating": "web", "reviews": "web",
+    "primary_keyword": "client", "secondary_keywords": "client",
+    "meta_title": "draft", "meta_description": "draft", "usp": "client",
+    "logo": "client", "headshot": "client", "interior_photos": "client"
+  },
+  "sources": {
+    "address_full": "https://example.com/fake-gbp",
+    "rating": "https://example.com/fake-gbp",
+    "hours": "https://example.com/fake-gbp"
+  }
+}

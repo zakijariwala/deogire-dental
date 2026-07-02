@@ -1,0 +1,49 @@
+---
+/**
+ * Shared shell for every prospect demo page. Injects the block palette as CSS
+ * custom properties, loads the block's font pairing, and enforces rule 7:
+ * noindex meta (belt to the _headers braces) and the preview notice.
+ */
+import '../styles/global.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/700.css';
+import '@fontsource-variable/inter';
+import PreviewNotice from '../components/PreviewNotice.astro';
+import type { Palette } from '../lib/site';
+
+interface Props {
+  title: string;
+  palette: Palette;
+}
+const { title, palette } = Astro.props;
+
+// Palette vars go on <html>, not <body>: Tailwind's @theme variables are
+// declared at :root and reference these, and var() chains inside custom
+// properties resolve at the declaring element, so both must live there.
+const vars = [
+  `--c-primary: ${palette.primary}`,
+  `--c-accent: ${palette.accent}`,
+  `--c-accent-safe: ${palette.accent_text_safe}`,
+  `--c-bg: ${palette.background}`,
+  `--c-surface: ${palette.surface}`,
+  `--c-text: ${palette.text}`,
+  `--c-muted: ${palette.muted}`,
+  `--f-heading: '${palette.fonts.heading}'`,
+  `--f-body: '${palette.fonts.body === 'Inter' ? 'Inter Variable' : palette.fonts.body}'`,
+].join('; ');
+---
+
+<!doctype html>
+<html lang="en" style={vars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <PreviewNotice />
+  </body>
+</html>

@@ -1,0 +1,70 @@
+---
+/**
+ * Address is build-blocking: missing renders a DATA NEEDED panel. Hours and
+ * map degrade individually. Day order is fixed; only supplied days render.
+ */
+import DataNeeded from './DataNeeded.astro';
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+
+const dayLabels: Record<string, string> = {
+  mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
+  fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
+};
+const hours = (clinic.hours as Record<string, string> | undefined) ?? {};
+const hourRows = Object.keys(dayLabels)
+  .filter((d) => hours[d])
+  .map((d) => ({ day: dayLabels[d], value: hours[d] }));
+---
+
+<section class="border-t border-(--c-text)/10">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">Visiting the clinic</h2>
+    <div class="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+      <div>
+        {
+          has(clinic, 'address_full') ? (
+            <>
+              <p class="max-w-[45ch] leading-relaxed text-(--c-text)">{clinic.address_full}</p>
+              {has(clinic, 'maps_embed_url') && (
+                <iframe
+                  src={clinic.maps_embed_url as string}
+                  class="mt-6 h-64 w-full rounded-2xl border border-(--c-text)/10"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  title="Clinic location map"
+                />
+              )}
+            </>
+          ) : (
+            <DataNeeded
+              fields={['address_full', 'pincode', 'maps_embed_url']}
+              source="web"
+              hint="Pulled from the Google Business Profile via the research instrument."
+            />
+          )
+        }
+      </div>
+      <div>
+        {
+          hourRows.length > 0 ? (
+            <dl class="divide-y divide-(--c-text)/10 rounded-2xl border border-(--c-text)/10 bg-(--c-surface) px-6 py-2">
+              {hourRows.map((r) => (
+                <div class="flex items-baseline justify-between gap-6 py-2.5">
+                  <dt class="text-sm font-medium text-(--c-muted)">{r.day}</dt>
+                  <dd class="text-sm text-(--c-text)">{r.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <DataNeeded compact fields={['hours']} source="web" hint="Opening hours as listed on the Google Business Profile." />
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

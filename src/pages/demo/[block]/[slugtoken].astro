@@ -1,0 +1,29 @@
+---
+/**
+ * Prospect demo route: /demo/<block>/<slug>-<demo_token>/ (rule 7: the token
+ * makes the URL unguessable; /demo/ and /demo/<block>/ intentionally have no
+ * index pages, so they 404). Only blocks with a built template emit pages.
+ */
+import { getCollection } from 'astro:content';
+import { BUILT_BLOCKS, type ClinicData } from '../../../lib/site';
+import BlockDermAesthetic from '../../../templates/block-derm-aesthetic.astro';
+
+export async function getStaticPaths() {
+  const clinics = await getCollection('clinics');
+  return clinics
+    .filter((c) => (BUILT_BLOCKS as readonly string[]).includes(c.data.block_id))
+    .map((c) => ({
+      params: { block: c.data.block_id, slugtoken: `${c.data.slug}-${c.data.demo_token}` },
+      props: { clinic: c.data },
+    }));
+}
+
+const { clinic } = Astro.props as { clinic: ClinicData };
+
+const templates: Record<string, typeof BlockDermAesthetic> = {
+  'derm-aesthetic': BlockDermAesthetic,
+};
+const Template = templates[clinic.block_id];
+---
+
+<Template clinic={clinic} />

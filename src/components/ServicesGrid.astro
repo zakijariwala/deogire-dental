@@ -1,0 +1,41 @@
+---
+/**
+ * The offering: renders only services the clinic actually stated (rule 1) —
+ * never padded with generic specialty services. Build-blocking: missing
+ * services renders a DATA NEEDED panel, not sample cards.
+ */
+import DataNeeded from './DataNeeded.astro';
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+const services = (clinic.services as { name: string; description?: string }[] | undefined) ?? [];
+---
+
+<section class="border-t border-(--c-text)/10">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">Treatments and services</h2>
+    {
+      has(clinic, 'services') ? (
+        <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((s) => (
+            <div class="rounded-2xl border border-(--c-text)/10 bg-(--c-surface) p-6">
+              <h3 class="text-lg font-semibold text-(--c-text)">{s.name}</h3>
+              {s.description && <p class="mt-2 text-sm leading-relaxed text-(--c-muted)">{s.description}</p>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8 max-w-2xl">
+          <DataNeeded
+            fields={['services']}
+            source="client"
+            hint="Intake Q11. The service list is the core differentiator; nothing is assumed on the clinic's behalf."
+          />
+        </div>
+      )
+    }
+  </div>
+</section>

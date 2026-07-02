@@ -1,0 +1,48 @@
+---
+/**
+ * Closing call-to-action. Intent stays distinct from the hero: the hero says
+ * "Call the clinic"; this section carries the full contact set. At least one
+ * contact method is build-blocking.
+ */
+import DataNeeded from './DataNeeded.astro';
+import { has, hasContactMethod, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+---
+
+<section class="border-t border-(--c-text)/10 bg-(--c-surface)">
+  <div class="mx-auto max-w-6xl px-6 py-16 text-center md:py-20">
+    <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">Book an appointment</h2>
+    {
+      hasContactMethod(clinic) ? (
+        <div class="mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          {has(clinic, 'phone_e164') && (
+            <a href={`tel:${clinic.phone_e164}`} class="text-lg font-semibold text-(--c-primary) underline-offset-4 hover:underline">
+              {clinic.phone_e164}
+            </a>
+          )}
+          {has(clinic, 'whatsapp') && (
+            <a
+              href={`https://wa.me/${(clinic.whatsapp as string).replace('+', '')}`}
+              class="text-lg font-semibold text-(--c-primary) underline-offset-4 hover:underline"
+            >
+              WhatsApp the clinic
+            </a>
+          )}
+          {has(clinic, 'email') && (
+            <a href={`mailto:${clinic.email}`} class="text-lg font-semibold text-(--c-primary) underline-offset-4 hover:underline">
+              {clinic.email}
+            </a>
+          )}
+        </div>
+      ) : (
+        <div class="mx-auto mt-8 max-w-md text-left">
+          <DataNeeded fields={['phone_e164', 'whatsapp', 'email']} source="client" hint="At least one contact method is required to render this page meaningfully." />
+        </div>
+      )
+    }
+  </div>
+</section>

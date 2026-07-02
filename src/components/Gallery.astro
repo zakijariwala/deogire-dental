@@ -1,0 +1,31 @@
+---
+/**
+ * COMPLIANCE-GATED (rule 3): the template renders this only when
+ * complianceAllows(clinic, 'before_after') is true, which requires the
+ * operator to have set compliance.json after verifying live NMC/DCI/council
+ * guidance. This component itself shows interior photos only; before/after
+ * imagery additionally needs per-image consent records (Phase 6a).
+ */
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+const photos = (clinic.interior_photos as string[] | undefined) ?? [];
+---
+
+{
+  has(clinic, 'interior_photos') && (
+    <section class="border-t border-(--c-text)/10">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <h2 class="font-(family-name:--font-heading) text-3xl font-semibold text-(--c-text) md:text-4xl">Inside the clinic</h2>
+        <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
+          {photos.map((p, i) => (
+            <img src={p} alt={`Clinic interior ${i + 1}`} class="aspect-[4/3] w-full rounded-2xl object-cover" loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

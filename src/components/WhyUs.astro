@@ -1,0 +1,39 @@
+---
+/**
+ * Optional trust section: renders only facts the clinic or a dated web pull
+ * supplied. The template skips it entirely when nothing is available. Rating
+ * always shows its snapshot date (rule 2) and never any superiority phrasing
+ * (compliance gate applies to copy, not just testimonials).
+ */
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+
+const rating = clinic.rating as { value: number; count: number; pulled_on: string } | undefined;
+const items: { value: string; label: string }[] = [];
+if (has(clinic, 'years_experience')) items.push({ value: `${clinic.years_experience}`, label: 'years in practice' });
+if (has(clinic, 'rating') && rating) items.push({ value: `${rating.value}`, label: `Google rating from ${rating.count} reviews, as of ${rating.pulled_on}` });
+if (has(clinic, 'languages')) items.push({ value: `${(clinic.languages as string[]).length}`, label: `consulting languages: ${(clinic.languages as string[]).join(', ')}` });
+---
+
+<section class="border-t border-(--c-text)/10">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    {has(clinic, 'usp') && <p class="max-w-[40ch] font-(family-name:--font-heading) text-2xl font-semibold leading-snug text-(--c-text) md:text-3xl">{clinic.usp}</p>}
+    {
+      items.length > 0 && (
+        <dl class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          {items.map((i) => (
+            <div>
+              <dt class="sr-only">{i.label}</dt>
+              <dd class="text-4xl font-semibold text-(--c-primary)">{i.value}</dd>
+              <p class="mt-1 max-w-[28ch] text-sm text-(--c-muted)">{i.label}</p>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+  </div>
+</section>

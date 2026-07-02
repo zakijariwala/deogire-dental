@@ -1,0 +1,25 @@
+---
+/**
+ * NAP footer. JSON-LD injection arrives in Phase 6b (after the compliance
+ * pass); until then the footer carries plain-text NAP only, with inline gap
+ * markers for missing pieces.
+ */
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+}
+const { clinic } = Astro.props;
+const place = [clinic.sector, clinic.city].filter(Boolean).join(', ');
+---
+
+<footer class="border-t border-(--c-text)/10">
+  <div class="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-10 pb-16 text-sm text-(--c-muted)">
+    <p class="font-medium text-(--c-text)">{has(clinic, 'display_name') ? clinic.display_name : 'DATA NEEDED: display_name'}</p>
+    <p>{has(clinic, 'address_full') ? clinic.address_full : `${place} (full address: data needed)`}</p>
+    <p>
+      {has(clinic, 'phone_e164') ? clinic.phone_e164 : 'Phone: data needed'}
+      {has(clinic, 'email') && ` · ${clinic.email}`}
+    </p>
+  </div>
+</footer>

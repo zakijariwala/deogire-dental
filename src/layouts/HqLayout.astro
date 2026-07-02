@@ -1,0 +1,32 @@
+---
+/**
+ * Operator-only HQ shell, served under the unguessable /hq-<SECRET>/ prefix
+ * (rule 7). Utilitarian by design; not part of any prospect-facing surface.
+ */
+import '../styles/global.css';
+import '@fontsource-variable/inter';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html
+  lang="en"
+  style="--c-bg:#FAFAFA; --c-surface:#FFFFFF; --c-text:#18181B; --c-muted:#52525B; --c-primary:#18181B; --f-heading:'Inter Variable'; --f-body:'Inter Variable'"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main class="mx-auto max-w-4xl px-6 py-12">
+      <slot />
+    </main>
+  </body>
+</html>

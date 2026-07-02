@@ -1,0 +1,51 @@
+---
+/**
+ * HQ index: all 6 blocks with build status and prospect counts. Reachable
+ * only via the secret prefix; never linked from any demo page (rule 7).
+ */
+import { getCollection } from 'astro:content';
+import HqLayout from '../../layouts/HqLayout.astro';
+import { BLOCK_IDS, BUILT_BLOCKS, HQ_SECRET, blockMeta } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return [{ params: { hq: `hq-${HQ_SECRET}` } }];
+}
+
+const clinics = await getCollection('clinics');
+const rows = BLOCK_IDS.map((id) => ({
+  id,
+  specialty: blockMeta(id).specialty,
+  built: (BUILT_BLOCKS as readonly string[]).includes(id),
+  count: clinics.filter((c) => c.data.block_id === id).length,
+}));
+---
+
+<HqLayout title="HQ | Clinic demos">
+  <h1 class="text-2xl font-semibold">Clinic demo HQ</h1>
+  <p class="mt-1 text-sm text-(--c-muted)">Operator-only. Do not share this URL; share individual demo links instead.</p>
+
+  <ul class="mt-8 divide-y divide-black/10 rounded-2xl border border-black/10 bg-(--c-surface)">
+    {
+      rows.map((b) => (
+        <li class="flex items-center justify-between gap-4 px-5 py-4">
+          <div>
+            <a href={`/hq-${HQ_SECRET}/${b.id}/`} class="font-medium underline-offset-4 hover:underline">
+              {b.specialty}
+            </a>
+            <p class="text-sm text-(--c-muted)">
+              {b.count} prospect{b.count === 1 ? '' : 's'} loaded
+            </p>
+          </div>
+          <span
+            class:list={[
+              'rounded-full px-3 py-1 text-xs font-semibold',
+              b.built ? 'bg-emerald-100 text-emerald-800' : 'bg-zinc-100 text-zinc-500',
+            ]}
+          >
+            {b.built ? 'template ready' : 'template pending'}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</HqLayout>

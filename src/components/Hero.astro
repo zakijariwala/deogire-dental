@@ -1,0 +1,77 @@
+---
+/**
+ * Asymmetric split hero: identity + primary contact left, clinic imagery
+ * right. Every string rendered here is clinic data or a DATA NEEDED panel —
+ * no generated taglines (rule 1). usp renders only when the clinic supplied
+ * one (intake Q13).
+ */
+import DataNeeded from './DataNeeded.astro';
+import { has, type ClinicData } from '../lib/site';
+
+interface Props {
+  clinic: ClinicData;
+  specialty: string;
+}
+const { clinic, specialty } = Astro.props;
+
+const place = [clinic.sector, clinic.city].filter(Boolean).join(', ');
+const heroImage = has(clinic, 'headshot')
+  ? (clinic.headshot as string)
+  : has(clinic, 'interior_photos')
+    ? (clinic.interior_photos as string[])[0]
+    : null;
+---
+
+<section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-16 pt-14 md:grid-cols-12 md:pb-24">
+  <div class="md:col-span-7">
+    <p class="text-sm font-medium text-(--c-muted)">{specialty}{place && ` in ${place}`}</p>
+    <h1 class="mt-3 font-(family-name:--font-heading) text-4xl font-semibold leading-[1.08] text-(--c-text) md:text-6xl">
+      {has(clinic, 'display_name') ? clinic.display_name : null}
+    </h1>
+    {!has(clinic, 'display_name') && <div class="mt-3"><DataNeeded fields={['display_name']} source="client" /></div>}
+
+    {has(clinic, 'usp') && <p class="mt-5 max-w-[48ch] text-lg leading-relaxed text-(--c-muted)">{clinic.usp}</p>}
+
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      {
+        has(clinic, 'phone_e164') && (
+          <a
+            href={`tel:${clinic.phone_e164}`}
+            class="rounded-full bg-(--c-primary) px-7 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]"
+          >
+            Call the clinic
+          </a>
+        )
+      }
+      {
+        has(clinic, 'whatsapp') && (
+          <a
+            href={`https://wa.me/${(clinic.whatsapp as string).replace('+', '')}`}
+            class="rounded-full border border-(--c-primary) px-7 py-3 text-sm font-semibold text-(--c-primary) transition-transform active:scale-[0.98]"
+          >
+            WhatsApp
+          </a>
+        )
+      }
+      {
+        !has(clinic, 'phone_e164') && !has(clinic, 'whatsapp') && (
+          <DataNeeded compact fields={['phone_e164', 'whatsapp']} source="client" hint="The primary call-to-action cannot render without a contact number." />
+        )
+      }
+    </div>
+  </div>
+
+  <div class="md:col-span-5">
+    {
+      heroImage ? (
+        <img src={heroImage} alt={`${clinic.display_name ?? 'Clinic'}`} class="aspect-[4/5] w-full rounded-2xl object-cover" loading="eager" />
+      ) : (
+        <DataNeeded
+          fields={['headshot', 'interior_photos']}
+          source="client"
+          hint="Intake Q16: doctor photo and 2 to 3 interior photos fill this space."
+        />
+      )
+    }
+  </div>
+</section>

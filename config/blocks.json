@@ -1,5 +1,68 @@
 {
-  "_status": "STUB — populated in Phase 3 after operator approval",
-  "_purpose": "Ordered section list per block and which schema fields feed each section. Base skeleton: hero → services_grid → about_doctor → why_us → hours_location → contact_cta → footer.",
-  "_blocks": ["dental", "vet", "ent", "ophthalmology", "derm-aesthetic", "plastic-surgery"]
+  "_notes": "Ordered section list per block and the schema fields feeding each section. Sections marked gated_by render only when BOTH the block's allowed_content flag AND the matching compliance.json flag are explicitly true (rule 3). Sections whose build-blocking fields are missing render a DATA NEEDED placeholder; sections whose optional fields are missing are omitted entirely.",
+
+  "_section_library": {
+    "hero": ["display_name", "specialty", "sector", "usp", "phone_e164", "whatsapp"],
+    "services_grid": ["services"],
+    "symptom_grid": ["services"],
+    "treatment_grid": ["services"],
+    "about_doctor": ["doctor_name", "qualifications", "council_reg_no", "years_experience", "bio", "headshot", "languages"],
+    "why_us": ["usp", "years_experience", "languages", "rating"],
+    "gallery": ["interior_photos"],
+    "procedure_detail": ["services", "fees"],
+    "safety_credentials": ["council_reg_no", "qualifications"],
+    "hours_location": ["address_full", "sector", "city", "pincode", "hours", "maps_embed_url", "lat", "lng"],
+    "contact_cta": ["phone_e164", "whatsapp", "email"],
+    "footer": ["display_name", "address_full", "phone_e164", "email", "gbp_url", "schema_org_type"]
+  },
+
+  "dental": {
+    "specialty": "Dentistry",
+    "schema_org_type": "Dentist",
+    "sections": [
+      "hero", "services_grid", "about_doctor", "why_us",
+      { "id": "gallery", "gated_by": "before_after" },
+      "hours_location", "contact_cta", "footer"
+    ]
+  },
+
+  "vet": {
+    "specialty": "Veterinary Care",
+    "schema_org_type": "VeterinaryCare",
+    "sections": ["hero", "services_grid", "about_doctor", "why_us", "hours_location", "contact_cta", "footer"]
+  },
+
+  "ent": {
+    "specialty": "ENT (Ear, Nose & Throat)",
+    "schema_org_type": "Physician",
+    "sections": ["hero", "symptom_grid", "about_doctor", "why_us", "hours_location", "contact_cta", "footer"],
+    "_symptom_grid_note": "Services are grouped under symptom areas: ear / nose / throat / sinus / voice. Grouping is presentation-only — the underlying services[] data is never invented to fill a group; empty groups are omitted."
+  },
+
+  "ophthalmology": {
+    "specialty": "Ophthalmology",
+    "schema_org_type": "Physician",
+    "sections": ["hero", "treatment_grid", "about_doctor", "why_us", "hours_location", "contact_cta", "footer"],
+    "_treatment_grid_note": "Services grouped under treatment areas: cataract / LASIK / glaucoma / retina / squint. Presentation-only grouping; empty groups omitted."
+  },
+
+  "derm-aesthetic": {
+    "specialty": "Dermatology & Aesthetics",
+    "schema_org_type": "MedicalClinic",
+    "sections": [
+      "hero", "services_grid", "about_doctor", "why_us",
+      { "id": "gallery", "gated_by": "before_after" },
+      "hours_location", "contact_cta", "footer"
+    ]
+  },
+
+  "plastic-surgery": {
+    "specialty": "Plastic & Reconstructive Surgery",
+    "schema_org_type": "MedicalBusiness",
+    "sections": [
+      "hero", "services_grid", "procedure_detail", "safety_credentials", "about_doctor", "why_us",
+      { "id": "gallery", "gated_by": "before_after" },
+      "hours_location", "contact_cta", "footer"
+    ]
+  }
 }

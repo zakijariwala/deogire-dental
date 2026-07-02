@@ -1,0 +1,4 @@
+{
+  "_notes": "Demo-deployment settings. hq_secret is the unguessable path segment for the operator HQ (rule 7): the HQ lives at /hq-<hq_secret>/. The HQ_SECRET env var, when set at build time, overrides this value. This file is acceptable only while the repo stays private; rotate the secret if the link ever leaks.",
+  "hq_secret": "33c0a7bf1c4ebb1766c4"
+}

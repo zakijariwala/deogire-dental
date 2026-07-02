@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+/*
+ * Block palettes arrive as CSS custom properties set inline on <body> by
+ * DemoLayout from config/tokens.json. Templates use them via Tailwind
+ * arbitrary values, e.g. bg-(--c-bg) text-(--c-text).
+ *
+ * Radius system (one system per page): interactive elements are full-pill,
+ * cards and placeholder panels are rounded-2xl (16px). Nothing else.
+ */
+
+@theme {
+  --font-heading: var(--f-heading), ui-serif, Georgia, serif;
+  --font-body: var(--f-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  -webkit-font-smoothing: antialiased;
+}
